@@ -22,7 +22,7 @@ const TransactionDetails = ({ transactions }) => {
           <section className="transaction-details">
             <h2>Transaction Name: {transaction.name}</h2>
             <h3>Amount: {transaction.amount} </h3>
-            <h3>Typ: {transaction.type}</h3>
+            <h3>Type: {transaction.type}</h3>
             <h3>Fixed: {transaction.fixed}</h3>
             <h3>Description: {transaction.description}</h3>
             <h3>Date: {transaction.date}</h3>
