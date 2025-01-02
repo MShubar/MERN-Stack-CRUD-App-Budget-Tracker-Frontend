@@ -10,12 +10,10 @@ import Home from './pages/transaction/Home'
 import TransactionList from './pages/transaction/TransactionList'
 import TransactionDetails from './pages/transaction/TransactionDetails'
 import TransactionUpdateForm from './pages/transaction/TransactionUpdateForm'
+import DeleteConfirm from './pages/transaction/DeleteConfirm'
+import TransactionForm from './pages/transaction/TransactionForm'
 import Signup from './pages/auth/Signup'
 import Signin from './pages/auth/Signin'
-// import PetDetails from './pages/petDetails'
-// import PetForm from './pages/PetForm'
-// import PetUpdateForm from './pages/PetUpdateForm'
-// import DeleteConfirm from './pages/DeleteConfirm'
 
 const App = () => {
   const [transactions, setTransactions] = useState([])
@@ -73,6 +71,24 @@ const App = () => {
             path="/update/:id"
             element={
               <TransactionUpdateForm
+                transactions={transactions}
+                setTransactions={setTransactions}
+              />
+            }
+          />
+          <Route
+            path="/delete/:id"
+            element={
+              <DeleteConfirm
+                transactions={transactions}
+                setTransactions={setTransactions}
+              />
+            }
+          />
+          <Route
+            path="/new"
+            element={
+              <TransactionForm
                 transactions={transactions}
                 setTransactions={setTransactions}
               />
