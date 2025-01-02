@@ -1,0 +1,114 @@
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: lightgrey;
+}
+
+header {
+  height: 20vh;
+}
+
+main {
+  height: 80vh;
+  text-align: center;
+}
+
+nav {
+  height: 20vh;
+  background-color: rgb(57, 57, 100);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+nav > a {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+h1 {
+  color: rgb(57, 57, 100);
+}
+
+main {
+  padding: 10px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: rgb(225, 166, 64);
+}
+
+.active {
+  color: rgb(225, 166, 64);
+}
+
+button {
+  background-color: rgb(57, 57, 100);
+  border: 2px solid rgb(225, 166, 64);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  height: 40px;
+  width: 100px;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: rgb(225, 166, 64);
+  border: 2px solid rgb(57, 57, 100);
+  color: rgb(57, 57, 100);
+  cursor: pointer;
+}
+
+img {
+  border: 2px solid rgb(57, 57, 100);
+  border-radius: 10px;
+}
+
+input {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.transaction-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  height: 80vh;
+}
+
+.transaction-card {
+  border: 2px solid rgb(225, 166, 64);
+  border-radius: 10px;
+  background-color: rgb(57, 57, 100);
+  color: white;
+  margin: 20px;
+  width: 200px;
+  height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.transaction-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
