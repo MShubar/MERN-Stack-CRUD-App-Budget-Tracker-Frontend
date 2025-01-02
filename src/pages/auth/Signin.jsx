@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { BASE_URL } from '../../globals'
 
 const initialFormData = {
   username: '',
@@ -17,10 +19,14 @@ const Signin = ({}) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      setFormData(initialFormData)
+      console.log(`${BASE_URL}/users/signin`)
+      const response = await axios.post(`${BASE_URL}/users/signin`, formData)
+      const token = response.data.token
+      localStorage.setItem('token', token)
       navigate('/transactionlist')
+      setFormData(initialFormData)
     } catch (error) {
-      setMessage(error.response?.data?.error)
+      setMessage(error.response?.data?.error || 'Login failed')
     }
   }
 
