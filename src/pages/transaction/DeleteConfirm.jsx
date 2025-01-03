@@ -7,11 +7,11 @@ const DeleteConfirm = ({ transactions, setTransactions }) => {
   const { id } = useParams()
 
   const deleteTransaction = async () => {
-    const token = localStorage.getItem('token') // Retrieve the token from local storage
+    const token = localStorage.getItem('token')
     try {
       await axios.delete(`${BASE_URL}/transactions/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}` // Include the token in the request headers
+          Authorization: `Bearer ${token}`
         }
       })
       let index = transactions.findIndex(
@@ -21,7 +21,6 @@ const DeleteConfirm = ({ transactions, setTransactions }) => {
       navigate('/transaction/list')
     } catch (error) {
       console.error('Error updating transaction:', error)
-      // Handle error (e.g., show a message to the user)
     }
   }
 

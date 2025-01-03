@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { BASE_URL } from '../../globals'
 
 const initialFormData = {
+  fullname: '',
   username: '',
   password: '',
-  passwordConf: '',
-  fullname: ''
+  passwordConf: ''
 }
 
 const Signup = () => {
@@ -18,16 +20,27 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // Add your signup logic here
-    setFormData(initialFormData)
+    try {
+      const response = await axios.post(`${BASE_URL}/users/signup`, formData)
+      const token = response.data.token
+      localStorage.setItem('token', token)
+      navigate('/auth/signin')
+      setFormData(initialFormData)
+    } catch (error) {
+      console.error('Error details:', error)
+      setMessage(
+        error.response?.data?.message ||
+          'An unexpected error occurred during signup.'
+      )
+    }
   }
 
   const isFormInvalid = () => {
     return !(
+      formData.fullname &&
       formData.username &&
       formData.password &&
-      formData.password === formData.passwordConf &&
-      formData.fullname
+      formData.password === formData.passwordConf
     )
   }
 
@@ -97,9 +110,6 @@ const Signup = () => {
           >
             Sign Up
           </button>
-          <Link to="/" className="btn btn-secondary">
-            Cancel
-          </Link>
         </div>
       </form>
     </main>

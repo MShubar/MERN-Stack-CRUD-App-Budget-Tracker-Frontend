@@ -21,14 +21,14 @@ const TransactionForm = ({ transactions, setTransactions }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const token = localStorage.getItem('token') // Retrieve the token from local storage
+    const token = localStorage.getItem('token')
     try {
       const response = await axios.post(
         `${BASE_URL}/transactions`,
         formValues,
         {
           headers: {
-            Authorization: `Bearer ${token}` // Include the token in the request headers
+            Authorization: `Bearer ${token}`
           }
         }
       )

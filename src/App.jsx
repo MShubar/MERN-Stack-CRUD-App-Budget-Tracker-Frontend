@@ -22,25 +22,24 @@ import Signin from './pages/auth/Signin'
 const App = () => {
   const [transactions, setTransactions] = useState([])
   const [categories, setCategories] = useState([])
-  const [isAuthenticated, setIsAuthenticated] = useState(false) // Authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   // const testToken =
   //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzc0MGUwZWI1ODA0MDYyMWJlODE2MjYiLCJpYXQiOjE3MzU2NTkyMjZ9.49FeCIBDzAoTdh6ty-ChKS4MpE65G9cq4gtfRwSDG58'
 
   useEffect(() => {
     const getAllTransactions = async () => {
-      const token = localStorage.getItem('token') // Retrieve the token from local storage
+      const token = localStorage.getItem('token')
       if (token) {
         try {
           const response = await axios.get(`${BASE_URL}/transactions`, {
             headers: {
-              Authorization: `Bearer ${token}` // Use the stored token
+              Authorization: `Bearer ${token}`
             }
           })
           setTransactions(response.data)
         } catch (error) {
           console.error('Error fetching transactions:', error)
-          // Handle error (e.g., show a message to the user)
         }
       }
     }
@@ -49,18 +48,17 @@ const App = () => {
   }, [])
   useEffect(() => {
     const getAllCategories = async () => {
-      const token = localStorage.getItem('token') // Retrieve the token from local storage
+      const token = localStorage.getItem('token')
       if (token) {
         try {
           const response = await axios.get(`${BASE_URL}/categories`, {
             headers: {
-              Authorization: `Bearer ${token}` // Use the stored token
+              Authorization: `Bearer ${token}`
             }
           })
           setCategories(response.data)
         } catch (error) {
           console.error('Error fetching transactions:', error)
-          // Handle error (e.g., show a message to the user)
         }
       }
     }
@@ -68,12 +66,12 @@ const App = () => {
     getAllCategories()
   }, [])
   const handleLogin = () => {
-    setIsAuthenticated(true) // Simulate successful login
+    setIsAuthenticated(true)
   }
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    setIsAuthenticated(false) // Simulate logout
+    setIsAuthenticated(false)
   }
 
   return (

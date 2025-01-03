@@ -7,11 +7,11 @@ const DeleteConfirmCategory = ({ categories, setCategories }) => {
   const { id } = useParams()
 
   const deleteCategory = async () => {
-    const token = localStorage.getItem('token') // Retrieve the token from local storage
+    const token = localStorage.getItem('token')
     try {
       await axios.delete(`${BASE_URL}/categories/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}` // Include the token in the request headers
+          Authorization: `Bearer ${token}`
         }
       })
       let index = categories.findIndex((category) => category._id === id)
@@ -19,7 +19,6 @@ const DeleteConfirmCategory = ({ categories, setCategories }) => {
       navigate('/Category/list')
     } catch (error) {
       console.error('Error updating transaction:', error)
-      // Handle error (e.g., show a message to the user)
     }
   }
 
