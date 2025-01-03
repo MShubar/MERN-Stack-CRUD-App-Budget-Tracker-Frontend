@@ -4,7 +4,7 @@ const TransactionList = ({ transactions }) => {
   return (
     <div>
       <h1>Transactions List</h1>
-      <NavLink className="addLink" to="/new">
+      <NavLink className="addLink" to="/transaction/new">
         New Transaction
       </NavLink>
       <section className="transaction-list">
