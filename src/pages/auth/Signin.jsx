@@ -23,7 +23,7 @@ const Signin = ({}) => {
       const response = await axios.post(`${BASE_URL}/users/signin`, formData)
       const token = response.data.token
       localStorage.setItem('token', token)
-      navigate('/transactionlist')
+      navigate('/transaction/list')
       setFormData(initialFormData)
     } catch (error) {
       setMessage(error.response?.data?.error || 'Login failed')
@@ -65,9 +65,6 @@ const Signin = ({}) => {
           <button className="btn btn-primary" type="submit">
             Log In
           </button>
-          <Link to="/" className="btn btn-secondary">
-            Cancel
-          </Link>
         </div>
       </form>
     </main>

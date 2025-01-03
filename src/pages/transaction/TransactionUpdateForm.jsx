@@ -22,7 +22,6 @@ const TransactionUpdateForm = ({ transactions, setTransactions }) => {
 
   const [formValues, setFormValues] = useState(initialState)
 
-  // Fetch transaction data when component mounts or id changes
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
@@ -36,17 +35,16 @@ const TransactionUpdateForm = ({ transactions, setTransactions }) => {
     fetchTransaction()
   }, [id])
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const token = localStorage.getItem('token') // Retrieve the token from local storage
+    const token = localStorage.getItem('token')
     try {
       const response = await axios.put(
         `${BASE_URL}/transactions/${id}`,
         formValues,
         {
           headers: {
-            Authorization: `Bearer ${token}` // Include the token in the request headers
+            Authorization: `Bearer ${token}`
           }
         }
       )
@@ -55,13 +53,12 @@ const TransactionUpdateForm = ({ transactions, setTransactions }) => {
           transaction._id === id ? response.data : transaction
         )
       )
-      navigate('/transaction/list') // Redirect to transaction list after successful update
+      navigate('/transaction/list')
     } catch (error) {
       console.error('Error updating transaction:', error)
     }
   }
 
-  // Handle form field changes
   const handleChange = (event) => {
     setFormValues({ ...formValues, [event.target.id]: event.target.value })
   }
