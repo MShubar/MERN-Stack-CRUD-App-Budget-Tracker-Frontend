@@ -117,7 +117,6 @@ const App = () => {
               />
             }
           />
-          //
           <Route
             path="/category/list"
             element={<CategoryList categories={categories} />}
