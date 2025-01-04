@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
 import axios from 'axios'
 import { BASE_URL } from '../../globals'
 
@@ -22,15 +23,15 @@ const Signup = () => {
     e.preventDefault()
     try {
       const response = await axios.post(`${BASE_URL}/users/signup`, formData)
-      const token = response.data.token
-      localStorage.setItem('token', token)
-      navigate('/auth/signin')
-      setFormData(initialFormData)
+      if (response.status === 201){
+        navigate("/auth/signin")
+      }
+      
     } catch (error) {
-      console.error('Error details:', error)
+   
       setMessage(
         error.response?.data?.message ||
-          'An unexpected error occurred during signup.'
+          'Signup failed.'
       )
     }
   }
@@ -75,6 +76,7 @@ const Signup = () => {
             className="form-control border border-success rounded-3 shadow-sm"
           />
         </div>
+
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
             Password:

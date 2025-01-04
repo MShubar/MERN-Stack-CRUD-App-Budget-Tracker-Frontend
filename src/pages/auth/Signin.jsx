@@ -7,8 +7,8 @@ const initialFormData = {
   username: '',
   password: ''
 }
+const Signin = ({ onLogin }) => {
 
-const Signin = ({}) => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -20,10 +20,13 @@ const Signin = ({}) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      //console.log(`${BASE_URL}/users/signin`)
       const response = await axios.post(`${BASE_URL}/users/signin`, formData)
       const token = response.data.token
       localStorage.setItem('token', token)
-      navigate('/transaction/list')
+      onLogin()
+      navigate('/transactionlist')
+
       setFormData(initialFormData)
     } catch (error) {
       setMessage(error.response?.data?.error || 'Login failed')

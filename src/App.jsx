@@ -24,9 +24,6 @@ const App = () => {
   const [categories, setCategories] = useState([])
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  // const testToken =
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzc0MGUwZWI1ODA0MDYyMWJlODE2MjYiLCJpYXQiOjE3MzU2NTkyMjZ9.49FeCIBDzAoTdh6ty-ChKS4MpE65G9cq4gtfRwSDG58'
-
   useEffect(() => {
     const getAllTransactions = async () => {
       const token = localStorage.getItem('token')
@@ -154,7 +151,10 @@ const App = () => {
             }
           />
           <Route path="/auth/signup" element={<Signup />} />
-          <Route path="/auth/signin" element={<Signin />} />
+          <Route
+            path="/auth/signin"
+            element={<Signin onLogin={handleLogin} />}
+          />
         </Routes>
       </main>
     </>
