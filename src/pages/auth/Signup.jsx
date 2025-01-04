@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { BASE_URL } from '../../globals'
 
 const initialFormData = {
+  fullname: '',
   username: '',
   password: '',
   passwordConf: '',
@@ -17,13 +20,20 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(formData)
-    setFormData(initialFormData)
+    try {
+      const response = await axios.post(`${BASE_URL}/users/signup`, formData)
+      if (response.status === 201) {
+        navigate('/auth/signin')
+      }
+    } catch (error) {
+      setMessage(error.response?.data?.error || 'Signup failed')
+    }
   }
 
   const isFormInvalid = () => {
     return !(
       formData.username &&
+      formData.fullname &&
       formData.password &&
       formData.password === formData.passwordConf &&
       formData.phoneNumber
@@ -42,6 +52,16 @@ const Signup = () => {
             id="name"
             value={formData.username}
             name="username"
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="fullname">full Name:</label>
+          <input
+            type="text"
+            id="fullname"
+            value={formData.fullname}
+            name="fullname"
             onChange={handleChange}
           />
         </div>
@@ -68,7 +88,7 @@ const Signup = () => {
         <div>
           <label htmlFor="phoneNumber">Phone Number:</label>
           <input
-            type="password"
+            type="text"
             id="phoneNumber"
             value={formData.phoneNumber}
             name="phoneNumber"

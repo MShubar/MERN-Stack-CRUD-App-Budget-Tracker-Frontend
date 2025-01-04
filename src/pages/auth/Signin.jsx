@@ -7,7 +7,7 @@ const initialFormData = {
   username: '',
   password: ''
 }
-const Signin = ({}) => {
+const Signin = ({ onLogin }) => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -19,10 +19,11 @@ const Signin = ({}) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      console.log(`${BASE_URL}/users/signin`)
+      //console.log(`${BASE_URL}/users/signin`)
       const response = await axios.post(`${BASE_URL}/users/signin`, formData)
       const token = response.data.token
       localStorage.setItem('token', token)
+      onLogin()
       navigate('/transactionlist')
       setFormData(initialFormData)
     } catch (error) {
