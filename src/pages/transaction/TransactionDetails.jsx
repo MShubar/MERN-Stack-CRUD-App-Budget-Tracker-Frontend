@@ -30,10 +30,14 @@ const TransactionDetails = ({ transactions }) => {
             <h3>Priority: {transaction.priority}</h3>
             <h3>Recurring: {transaction.recurring}</h3>
 
-            <button onClick={() => navigate(`/update/${transaction._id}`)}>
+            <button
+              onClick={() => navigate(`/transaction/update/${transaction._id}`)}
+            >
               Update Transaction
             </button>
-            <button onClick={() => navigate(`/delete/${transaction._id}`)}>
+            <button
+              onClick={() => navigate(`/transaction/delete/${transaction._id}`)}
+            >
               Delete Transaction
             </button>
           </section>

@@ -7,18 +7,18 @@ const DeleteConfirm = ({ transactions, setTransactions }) => {
   const { id } = useParams()
 
   const deleteTransaction = async () => {
-    const token = localStorage.getItem('token') // Retrieve the token from local storage
+    const token = localStorage.getItem('token')
     try {
       await axios.delete(`${BASE_URL}/transactions/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}` // Include the token in the request headers
+          Authorization: `Bearer ${token}`
         }
       })
       let index = transactions.findIndex(
         (transaction) => transaction._id === id
       )
       setTransactions(transactions.toSpliced(index, 1))
-      navigate('/transactionlist')
+      navigate('/transaction/list')
     } catch (error) {
       console.error('Error deleting transaction:', error)
       // Handle error (e.g., show a message to the user)
@@ -28,7 +28,7 @@ const DeleteConfirm = ({ transactions, setTransactions }) => {
   return (
     <div>
       <h1>Are you sure you want to delete this transaction?</h1>
-      <button onClick={() => navigate(`/transactionlist/${id}`)}>No</button>
+      <button onClick={() => navigate(`/transaction/list/${id}`)}>No</button>
       <button onClick={deleteTransaction}>Yes</button>
     </div>
   )

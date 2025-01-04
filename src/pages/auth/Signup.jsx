@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import axios from 'axios'
 import { BASE_URL } from '../../globals'
 
@@ -7,9 +8,9 @@ const initialFormData = {
   fullname: '',
   username: '',
   password: '',
-  passwordConf: '',
-  phoneNumber: ''
+  passwordConf: ''
 }
+
 const Signup = () => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
@@ -22,85 +23,96 @@ const Signup = () => {
     e.preventDefault()
     try {
       const response = await axios.post(`${BASE_URL}/users/signup`, formData)
-      if (response.status === 201) {
-        navigate('/auth/signin')
+      if (response.status === 201){
+        navigate("/auth/signin")
       }
+      
     } catch (error) {
-      setMessage(error.response?.data?.error || 'Signup failed')
+   
+      setMessage(
+        error.response?.data?.message ||
+          'Signup failed.'
+      )
     }
   }
 
   const isFormInvalid = () => {
     return !(
-      formData.username &&
       formData.fullname &&
+      formData.username &&
       formData.password &&
-      formData.password === formData.passwordConf &&
-      formData.phoneNumber
+      formData.password === formData.passwordConf
     )
   }
 
   return (
-    <main>
-      <h1>Sign Up</h1>
-      <p style={{ color: 'red' }}>{message}</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="name"
-            value={formData.username}
-            name="username"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="fullname">full Name:</label>
+    <main className="container mt-5">
+      <h1 className="text-center mb-4">Sign Up</h1>
+      {message && <p className="text-danger text-center">{message}</p>}
+      <form onSubmit={handleSubmit} className="mx-auto w-50">
+        <div className="mb-3">
+          <label htmlFor="fullname" className="form-label">
+            Full Name:
+          </label>
           <input
             type="text"
             id="fullname"
             value={formData.fullname}
             name="fullname"
             onChange={handleChange}
+            className="form-control border border-success rounded-3 shadow-sm"
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username:
+          </label>
+          <input
+            type="text"
+            id="username"
+            value={formData.username}
+            name="username"
+            onChange={handleChange}
+            className="form-control border border-success rounded-3 shadow-sm"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password:
+          </label>
           <input
             type="password"
             id="password"
             value={formData.password}
             name="password"
             onChange={handleChange}
+            className="form-control border border-success rounded-3 shadow-sm"
           />
         </div>
-        <div>
-          <label htmlFor="confirm">Confirm Password:</label>
+        <div className="mb-3">
+          <label htmlFor="passwordConf" className="form-label">
+            Confirm Password:
+          </label>
           <input
             type="password"
-            id="confirm"
+            id="passwordConf"
             value={formData.passwordConf}
             name="passwordConf"
             onChange={handleChange}
+            className="form-control border border-success rounded-3 shadow-sm"
           />
         </div>
-        <div>
-          <label htmlFor="phoneNumber">Phone Number:</label>
-          <input
-            type="text"
-            id="phoneNumber"
-            value={formData.phoneNumber}
-            name="phoneNumber"
-            onChange={handleChange}
-          />
+
+        <div className="d-flex justify-content-between">
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={isFormInvalid()}
+          >
+            Sign Up
+          </button>
         </div>
-        <section>
-          <button disabled={isFormInvalid()}>Sign Up</button>
-          <Link to="/">
-            <button>Cancel</button>
-          </Link>
-        </section>
       </form>
     </main>
   )

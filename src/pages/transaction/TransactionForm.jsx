@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BASE_URL } from '../../globals'
-const TransactionsForm = ({ transactions, setTransactions }) => {
+
+const TransactionForm = ({ transactions, setTransactions }) => {
   let navigate = useNavigate()
-  let initialState = {
+  const initialState = {
     name: '',
     amount: '',
     type: '',
@@ -17,110 +18,182 @@ const TransactionsForm = ({ transactions, setTransactions }) => {
     budgetId: '6776acef792590ba48e7de14'
   }
   const [formValues, setFormValues] = useState(initialState)
+
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const token = localStorage.getItem('token') // Retrieve the token from local storage
+    const token = localStorage.getItem('token')
     try {
       const response = await axios.post(
         `${BASE_URL}/transactions`,
         formValues,
         {
           headers: {
-            Authorization: `Bearer ${token}` // Include the token in the request headers
+            Authorization: `Bearer ${token}`
           }
         }
       )
-      //console.log(response)
       setTransactions([...transactions, response.data])
       setFormValues(initialState)
-      navigate('/transactionlist')
+      navigate('/transaction/list')
     } catch (error) {
       console.error('Error adding transaction:', error)
-      // Handle error (e.g., show a message to the user)
     }
   }
+
   const handleChange = (event) => {
     setFormValues({ ...formValues, [event.target.id]: event.target.value })
   }
+
   return (
-    <div>
+    <div className="container mt-5">
       <h1>New Transaction</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Transaction name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          onChange={handleChange}
-          value={formValues.name}
-        />
-        <label htmlFor="amount">Amount:</label>
-        <input
-          type="text"
-          id="amount"
-          name="amount"
-          onChange={handleChange}
-          value={formValues.amount}
-        />
-        <label htmlFor="type">Type:</label>
-        <input
-          type="text"
-          id="type"
-          name="type"
-          onChange={handleChange}
-          value={formValues.type}
-        />
-        <label htmlFor="fixed">Fixed:</label>
-        <input
-          type="text"
-          id="fixed"
-          name="fixed"
-          onChange={handleChange}
-          value={formValues.fixed}
-        />
-        <label htmlFor="description">Description:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          onChange={handleChange}
-          value={formValues.description}
-        />
-        <label htmlFor="date">Date:</label>
-        <input
-          type="text"
-          id="date"
-          name="date"
-          onChange={handleChange}
-          value={formValues.date}
-        />
-        <label htmlFor="category">Category:</label>
-        <input
-          type="text"
-          id="category"
-          name="category"
-          onChange={handleChange}
-          value={formValues.category}
-        />
-        <label htmlFor="priority">Priority:</label>
-        <input
-          type="text"
-          id="priority"
-          name="priority"
-          onChange={handleChange}
-          value={formValues.priority}
-        />
-        <label htmlFor="recurring">Recurring:</label>
-        <input
-          type="text"
-          id="recurring"
-          name="recurring"
-          onChange={handleChange}
-          value={formValues.recurring}
-        />
-        <button type="submit">Submit</button>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">
+            Transaction Name:
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.name}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="amount" className="form-label">
+            Amount:
+          </label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.amount}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="type" className="form-label">
+            Type:
+          </label>
+          <input
+            type="text"
+            id="type"
+            name="type"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.type}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="fixed" className="form-label">
+            Fixed:
+          </label>
+          <input
+            type="text"
+            id="fixed"
+            name="fixed"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.fixed}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="description" className="form-label">
+            Description:
+          </label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.description}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="date" className="form-label">
+            Date:
+          </label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.date}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="category" className="form-label">
+            Category:
+          </label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.category}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="priority" className="form-label">
+            Priority:
+          </label>
+          <input
+            type="text"
+            id="priority"
+            name="priority"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.priority}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="recurring" className="form-label">
+            Recurring:
+          </label>
+          <input
+            type="text"
+            id="recurring"
+            name="recurring"
+            className="form-control border border-success rounded-3 shadow-sm"
+            onChange={handleChange}
+            value={formValues.recurring}
+          />
+        </div>
+
+        <div className="d-flex justify-content-between">
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => setFormValues(initialState)}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   )
 }
-export default TransactionsForm
+
+export default TransactionForm
