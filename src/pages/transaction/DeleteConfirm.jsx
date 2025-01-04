@@ -20,7 +20,7 @@ const DeleteConfirm = ({ transactions, setTransactions }) => {
       setTransactions(transactions.toSpliced(index, 1))
       navigate('/transactionlist')
     } catch (error) {
-      console.error('Error updating transaction:', error)
+      console.error('Error deleting transaction:', error)
       // Handle error (e.g., show a message to the user)
     }
   }
