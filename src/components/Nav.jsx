@@ -4,6 +4,8 @@ const Nav = ({ isAuthenticated, onLogout }) => {
     <nav>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/transactionlist">Transaction List</NavLink>
+      <NavLink to="/budgetlist">Budget List</NavLink>
+
 
       <NavLink to="/auth/signin">Signin</NavLink>
       <NavLink to="/auth/signup">Signup</NavLink>
