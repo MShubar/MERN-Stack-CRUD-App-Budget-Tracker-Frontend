@@ -67,7 +67,7 @@ form {
   align-items: center;
 }
 
-.transaction-list {
+.transaction-list, .budget-list {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -75,7 +75,7 @@ form {
   height: 80vh;
 }
 
-.transaction-card {
+.transaction-card, .budget-card {
   border: 2px solid rgb(225, 166, 64);
   border-radius: 10px;
   background-color: rgb(57, 57, 100);
@@ -90,7 +90,7 @@ form {
   align-items: center;
 }
 
-.transaction-details {
+.transaction-details, .budget-details {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -100,3 +100,4 @@ form {
 .addLink {
   color: blueviolet;
 }
+

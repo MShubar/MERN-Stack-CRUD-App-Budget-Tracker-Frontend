@@ -5,6 +5,11 @@ import axios from 'axios'
 import './App.css'
 import Nav from './components/Nav'
 import Home from './pages/transaction/Home'
+import BudgetList from './pages/budget/BudgetList'
+import BudgetForm from './pages/budget/BudgetForm'
+import BudgetDetails from './pages/budget/BudgetDetails'
+import BudgetUpdateForm from './pages/budget/BudgetUpdateForm'
+import BudgetDeleteConfirm from './pages/budget/BudgetDeleteConfirm'
 import TransactionList from './pages/transaction/TransactionList'
 import TransactionDetails from './pages/transaction/TransactionDetails'
 import TransactionUpdateForm from './pages/transaction/TransactionUpdateForm'
@@ -20,9 +25,31 @@ import Signup from './pages/auth/Signup'
 import Signin from './pages/auth/Signin'
 
 const App = () => {
+  const [budgets, setBudgets] = useState([])
   const [transactions, setTransactions] = useState([])
   const [categories, setCategories] = useState([])
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    const getAllBudgets = async () => {
+      const token = localStorage.getItem('token') 
+      if (token) {
+        try {
+          const response = await axios.get(`${BASE_URL}/budgets`, {
+            headers: {
+              Authorization: `Bearer ${token}` 
+            }
+          })
+          setBudgets(response.data)
+        } catch (error) {
+          console.error('Error fetching budgets:', error)
+          
+        }
+      }
+    }
+
+    getAllBudgets()
+  }, [])
 
   useEffect(() => {
     const getAllTransactions = async () => {
@@ -79,77 +106,18 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/transaction/list"
-            element={<TransactionList transactions={transactions} />}
-          />
-          <Route
-            path="/transaction/list/:id"
-            element={<TransactionDetails transactions={transactions} />}
-          />
-          <Route
-            path="/transaction/update/:id"
-            element={
-              <TransactionUpdateForm
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
-          />
-          <Route
-            path="/transaction/delete/:id"
-            element={
-              <DeleteConfirm
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
-          />
-          <Route
-            path="/transaction/new"
-            element={
-              <TransactionForm
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
-          />
-          //
-          <Route
-            path="/category/list"
-            element={<CategoryList categories={categories} />}
-          />
-          <Route
-            path="/category/list/:id"
-            element={<CategoryDetails categories={categories} />}
-          />
-          <Route
-            path="/category/update/:id"
-            element={
-              <CategoryUpdateForm
-                categories={categories}
-                setCategories={setCategories}
-              />
-            }
-          />
-          <Route
-            path="/category/delete/:id"
-            element={
-              <DeleteConfirm
-                categories={categories}
-                setCategories={setCategories}
-              />
-            }
-          />
-          <Route
-            path="/category/new"
-            element={
-              <CategoryForm
-                categories={categories}
-                setCategories={setCategories}
-              />
-            }
-          />
+          <Route path="/budgetlist" element={<BudgetList budgets={budgets}/>} />
+          <Route path="/newbudget" element={<BudgetForm budgets={budgets} setBudgets={setBudgets}/>} />
+          <Route path="/budgetlist/:id" element={<BudgetDetails budgets={budgets} />} />
+          <Route path="/updatebudget/:id" element={<BudgetUpdateForm budgets={budgets} setBudgets={setBudgets}/>} />
+          <Route path="/deletebudget/:id" element={<BudgetDeleteConfirm budgets={budgets} setBudgets={setBudgets}/>} />
+
+
+          <Route path="/transactionlist" element={<TransactionList transactions={transactions} />}/>
+          <Route path="/transactionlist/:id" element={<TransactionDetails transactions={transactions} />}/>
+          <Route path="/update/:id" element={ <TransactionUpdateForm transactions={transactions} setTransactions={setTransactions} />} />
+          <Route path="/delete/:id"  element={ <DeleteConfirm transactions={transactions} setTransactions={setTransactions} />} />
+          <Route path="/new" element={<TransactionForm transactions={transactions} setTransactions={setTransactions}/>} />
           <Route path="/auth/signup" element={<Signup />} />
           <Route
             path="/auth/signin"
