@@ -10,6 +10,8 @@ import Home from './pages/transaction/Home'
 import BudgetList from './pages/budget/BudgetList'
 import BudgetForm from './pages/budget/BudgetForm'
 import BudgetDetails from './pages/budget/BudgetDetails'
+import BudgetUpdateForm from './pages/budget/BudgetUpdateForm'
+import BudgetDeleteConfirm from './pages/budget/BudgetDeleteConfirm'
 import TransactionList from './pages/transaction/TransactionList'
 import TransactionDetails from './pages/transaction/TransactionDetails'
 import TransactionUpdateForm from './pages/transaction/TransactionUpdateForm'
@@ -87,6 +89,9 @@ const App = () => {
           <Route path="/budgetlist" element={<BudgetList budgets={budgets}/>} />
           <Route path="/newbudget" element={<BudgetForm budgets={budgets} setBudgets={setBudgets}/>} />
           <Route path="/budgetlist/:id" element={<BudgetDetails budgets={budgets} />} />
+          <Route path="/updatebudget/:id" element={<BudgetUpdateForm budgets={budgets} setBudgets={setBudgets}/>} />
+          <Route path="/deletebudget/:id" element={<BudgetDeleteConfirm budgets={budgets} setBudgets={setBudgets}/>} />
+
 
           <Route path="/transactionlist" element={<TransactionList transactions={transactions} />}/>
           <Route path="/transactionlist/:id" element={<TransactionDetails transactions={transactions} />}/>
