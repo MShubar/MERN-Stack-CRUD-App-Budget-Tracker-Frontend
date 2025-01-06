@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-const Budget = () => {
+const Budget = ({ budget }) => {
 
     return(
         <Link to={`/budgetlist/${budget._id}`}>

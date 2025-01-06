@@ -18,8 +18,8 @@ const BudgetUpdateForm = ({ budgets, setBudgets}) => {
         event.preventDefault()
         const token = localStorage.getItem('token') 
         try {
-          const response = await axios.post(
-            `${BASE_URL}/budgets`,
+          const response = await axios.put(
+            `${BASE_URL}/budgets/${id}`,
             formValues,
             {
               headers: {
