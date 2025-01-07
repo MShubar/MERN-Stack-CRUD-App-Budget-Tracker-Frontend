@@ -1,11 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../assets/logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css' // Import Bootstrap styles
 
 const Nav = ({ isAuthenticated, onLogout, fullName }) => {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true)
+      } else {
+        setIsScrolled(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <nav className="navbar navbar-expand-lg ">
+    <nav
+      className={`navbar navbar-expand-lg ${
+        isScrolled ? 'bg-dark bg-opacity-75' : 'bg-transparent'
+      } fixed-top`}
+    >
       <div className="container-fluid">
         <div className="navbar-logo">
           <NavLink to="/">
@@ -30,16 +49,16 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <NavLink
-                to="/"
-                className="nav-link btn btn-outline-success px-3 py-2 me-2"
-              >
-                Home
-              </NavLink>
-            </li>
             {!isAuthenticated && (
               <>
+                <li className="nav-item">
+                  <NavLink
+                    to="/"
+                    className="nav-link btn btn-outline-success px-3 py-2 me-2"
+                  >
+                    Home
+                  </NavLink>
+                </li>
                 <li className="nav-item">
                   <NavLink
                     to="/auth/signin"
@@ -60,6 +79,14 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
             )}
             {isAuthenticated && (
               <>
+                <li className="nav-item">
+                  <NavLink
+                    to="/dashboard"
+                    className="nav-link btn btn-outline-success px-3 py-2 me-2"
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
