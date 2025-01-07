@@ -114,35 +114,44 @@ const App = () => {
     setIsAuthenticated(false)
   }
 
-
   const handleSearchBar = (event) => {
     setSearchBar(event.target.value)
-  };
+  }
 
-  const filteredBudgets = budgets.filter((budget) => budget.name.toLowerCase().includes(searchBar.toLowerCase()))
+  const filteredBudgets = budgets.filter((budget) =>
+    budget.name.toLowerCase().includes(searchBar.toLowerCase())
+  )
 
-  const filteredTransactions = transactions.filter((transaction) => transaction.name.toLowerCase().includes(searchBar.toLowerCase()))
+  const filteredTransactions = transactions.filter((transaction) =>
+    transaction.name.toLowerCase().includes(searchBar.toLowerCase())
+  )
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(searchBar.toLowerCase())
+  )
 
   return (
     <>
       <header>
         <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
         <input
-        type="text"
-        placeholder="Search for something.."
-        value={searchBar}
-        onChange={handleSearchBar}
+          type="text"
+          placeholder="Search for something.."
+          value={searchBar}
+          onChange={handleSearchBar}
         />
       </header>
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-
           {user ? (
             <Route
               path="/transaction/list"
               element={
-                <TransactionList transactions={filteredTransactions} user={user} />
+                <TransactionList
+                  transactions={filteredTransactions}
+                  user={user}
+                />
+
               }
             />
           ) : null}
@@ -211,19 +220,30 @@ const App = () => {
           //
           {user ? (
             <Route
-              path="/category/list"
-              element={<CategoryList categories={categories} />}
+              path="/categorylist"
+              element={<CategoryList categories={filteredCategories} />}
             />
           ) : null}
           {user ? (
             <Route
-              path="/category/list/:id"
+              path="/newcategory"
+              element={
+                <CategoryForm
+                  categories={categories}
+                  setCategories={setCategories}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/categorylist/:id"
               element={<CategoryDetails categories={categories} />}
             />
           ) : null}
           {user ? (
             <Route
-              path="/category/update/:id"
+              path="/categoryupdate/:id"
               element={
                 <CategoryUpdateForm
                   categories={categories}
@@ -234,26 +254,16 @@ const App = () => {
           ) : null}
           {user ? (
             <Route
-              path="/category/delete/:id"
+              path="/categorydelete/:id"
               element={
-                <DeleteConfirm
+                <DeleteConfirmCategory
                   categories={categories}
                   setCategories={setCategories}
                 />
               }
             />
           ) : null}
-          {user ? (
-            <Route
-              path="/category/new"
-              element={
-                <CategoryForm
-                  categories={categories}
-                  setCategories={setCategories}
-                />
-              }
-            />
-          ) : null}
+          //
           {user ? (
             <Route
               path="/budgetlist"
