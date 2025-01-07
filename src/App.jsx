@@ -114,35 +114,40 @@ const App = () => {
     setIsAuthenticated(false)
   }
 
-
   const handleSearchBar = (event) => {
     setSearchBar(event.target.value)
-  };
+  }
 
-  const filteredBudgets = budgets.filter((budget) => budget.name.toLowerCase().includes(searchBar.toLowerCase()))
+  const filteredBudgets = budgets.filter((budget) =>
+    budget.name.toLowerCase().includes(searchBar.toLowerCase())
+  )
 
-  const filteredTransactions = transactions.filter((transaction) => transaction.name.toLowerCase().includes(searchBar.toLowerCase()))
+  const filteredTransactions = transactions.filter((transaction) =>
+    transaction.name.toLowerCase().includes(searchBar.toLowerCase())
+  )
 
   return (
     <>
       <header>
         <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <input
+          type="text"
+          placeholder="Search for something.."
+          value={searchBar}
+          onChange={handleSearchBar}
+        />
       </header>
       <main>
-        <input
-        type="text"
-        placeholder="Search for something.."
-        value={searchBar}
-        onChange={handleSearchBar}
-        />
         <Routes>
           <Route path="/" element={<Home />} />
-
           {user ? (
             <Route
               path="/transaction/list"
               element={
-                <TransactionList transactions={transactions} user={user} />
+                <TransactionList
+                  transactions={filteredTransactions}
+                  user={user}
+                />
               }
             />
           ) : null}
@@ -257,7 +262,7 @@ const App = () => {
           {user ? (
             <Route
               path="/budgetlist"
-              element={<BudgetList budgets={budgets} />}
+              element={<BudgetList budgets={filteredBudgets} />}
             />
           ) : null}
           {user ? (
