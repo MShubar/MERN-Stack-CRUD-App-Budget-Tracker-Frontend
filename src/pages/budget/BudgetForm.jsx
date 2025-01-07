@@ -5,12 +5,12 @@ import { BASE_URL } from "../../globals"
 
 const BudgetForm = ({ budgets, setBudgets}) => {
     let navigate = useNavigate()
-    const userId = localStorage.getItem('userId') 
+    // const userId = localStorage.getItem('userId') 
 
     let initialState = {
         name: '',
         balance: '',
-        userId:userId
+        // userId:userId
     }
     const [formValues, setFormValues] = useState(initialState)
 

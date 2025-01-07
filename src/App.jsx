@@ -30,6 +30,7 @@ const App = () => {
   const [categories, setCategories] = useState([])
   const [user, setUser] = useState()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [searchBar, setSearchBar] = useState('')
 
   useEffect(() => {
     const getAllBudgets = async () => {
@@ -113,14 +114,30 @@ const App = () => {
     setIsAuthenticated(false)
   }
 
+
+  const handleSearchBar = (event) => {
+    setSearchBar(event.target.value)
+  };
+
+  const filteredBudgets = budgets.filter((budget) => budget.name.toLowerCase().includes(searchBar.toLowerCase()))
+
+  const filteredTransactions = transactions.filter((transaction) => transaction.name.toLowerCase().includes(searchBar.toLowerCase()))
+
   return (
     <>
       <header>
         <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       </header>
       <main>
+        <input
+        type="text"
+        placeholder="Search for something.."
+        value={searchBar}
+        onChange={handleSearchBar}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
+
           {user ? (
             <Route
               path="/transaction/list"
