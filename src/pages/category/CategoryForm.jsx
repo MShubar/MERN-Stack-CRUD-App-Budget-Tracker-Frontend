@@ -14,7 +14,7 @@ const CategoryForm = ({ Categories, setCategories }) => {
     event.preventDefault()
     const token = localStorage.getItem('token')
     try {
-      const response = await axios.post(`${BASE_URL}/categories`, formValues, {
+      const response = await axios.post(`${BASE_URL}/category`, formValues, {
         headers: {
           Authorization: `Bearer ${token}`
         }
