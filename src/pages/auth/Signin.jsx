@@ -24,7 +24,7 @@ const Signin = ({ onLogin }) => {
       const token = response.data.token
       localStorage.setItem('token', token)
       onLogin()
-      navigate('/transaction/list')
+      navigate('/')
 
       setFormData(initialFormData)
     } catch (error) {

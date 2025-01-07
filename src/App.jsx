@@ -105,7 +105,6 @@ const App = () => {
       </header>
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
           <Route
             path="/budgetlist"
             element={<BudgetList budgets={budgets} />}
@@ -130,6 +129,7 @@ const App = () => {
               <BudgetDeleteConfirm budgets={budgets} setBudgets={setBudgets} />
             }
           />
+
           <Route
             path="/transactionlist"
             element={<TransactionList transactions={transactions} />}
