@@ -22,7 +22,7 @@ import CategoryList from './pages/category/CategoryList'
 import CategoryUpdateForm from './pages/category/CategoryUpdateForm'
 import DeleteConfirmCategory from './pages/category/DeleteConfirmCategory'
 import Signup from './pages/auth/Signup'
-import Signin from './pages/auth/signin'
+import Signin from './pages/auth/Signin'
 
 const App = () => {
   const [budgets, setBudgets] = useState([])
@@ -81,7 +81,7 @@ const App = () => {
           })
           setCategories(response.data)
         } catch (error) {
-          console.error('Error fetching transactions:', error)
+          console.error('Error fetching categories:', error)
         }
       }
     }
@@ -171,26 +171,37 @@ const App = () => {
           />
           <Route
             path="/categorylist"
-            element={<BudgetList budgets={budgets} />}
+            element={<CategoryList categories={categories} />}
           />
           <Route
             path="/newcategory"
-            element={<BudgetForm budgets={budgets} setBudgets={setBudgets} />}
+            element={
+              <CategoryForm
+                categories={categories}
+                setCategories={setCategories}
+              />
+            }
           />
           <Route
             path="/categorylist/:id"
-            element={<BudgetDetails budgets={budgets} />}
+            element={<CategoryDetails categories={categories} />}
           />
           <Route
             path="/updatecategory/:id"
             element={
-              <BudgetUpdateForm budgets={budgets} setBudgets={setBudgets} />
+              <CategoryUpdateForm
+                categories={categories}
+                setCategories={setCategories}
+              />
             }
           />
           <Route
             path="/deletecategory/:id"
             element={
-              <BudgetDeleteConfirm budgets={budgets} setBudgets={setBudgets} />
+              <CategoryDeleteConfirm
+                categories={categories}
+                setCategories={setCategories}
+              />
             }
           />
         </Routes>

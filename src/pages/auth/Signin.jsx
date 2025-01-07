@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BASE_URL } from '../../globals'
 
@@ -23,7 +23,6 @@ const Signin = ({ onLogin }) => {
       const response = await axios.post(`${BASE_URL}/users/signin`, formData)
       const token = response.data.token
       localStorage.setItem('token', token)
-      localStorage.setItem('userId', response.data.user._id)
       onLogin()
       navigate('/transaction/list')
 

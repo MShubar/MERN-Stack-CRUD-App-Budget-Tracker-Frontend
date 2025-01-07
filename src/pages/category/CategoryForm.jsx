@@ -21,7 +21,7 @@ const CategoryForm = ({ Categories, setCategories }) => {
       })
       setCategories([...Categories, response.data])
       setFormValues(initialState)
-      navigate('/category/list')
+      navigate('/categorylist')
     } catch (error) {
       console.error('Error adding transaction:', error)
     }

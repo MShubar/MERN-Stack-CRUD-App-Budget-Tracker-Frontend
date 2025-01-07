@@ -44,7 +44,7 @@ const CategoryUpdateForm = ({ categories, setCategories }) => {
           category._id === id ? response.data : category
         )
       )
-      navigate('/category/list')
+      navigate('/categorylist')
     } catch (error) {
       console.error('Error updating transaction:', error)
     }
@@ -78,7 +78,7 @@ const CategoryUpdateForm = ({ categories, setCategories }) => {
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={() => navigate('/category/list')}
+            onClick={() => navigate('/categorylist')}
           >
             Cancel
           </button>
