@@ -127,14 +127,14 @@ const App = () => {
     <>
       <header>
         <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-      </header>
-      <main>
         <input
         type="text"
         placeholder="Search for something.."
         value={searchBar}
         onChange={handleSearchBar}
         />
+      </header>
+      <main>
         <Routes>
           <Route path="/" element={<Home />} />
 
@@ -142,7 +142,7 @@ const App = () => {
             <Route
               path="/transaction/list"
               element={
-                <TransactionList transactions={transactions} user={user} />
+                <TransactionList transactions={filteredTransactions} user={user} />
               }
             />
           ) : null}
@@ -257,7 +257,7 @@ const App = () => {
           {user ? (
             <Route
               path="/budgetlist"
-              element={<BudgetList budgets={budgets} />}
+              element={<BudgetList budgets={filteredBudgets} />}
             />
           ) : null}
           {user ? (
