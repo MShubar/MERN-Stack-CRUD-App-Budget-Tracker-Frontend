@@ -8,7 +8,7 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
     <nav className="navbar navbar-expand-lg ">
       <div className="container-fluid">
         <div className="navbar-logo">
-          <NavLink to="/" exact>
+          <NavLink to="/">
             <img
               src={logo}
               alt="Logo"
@@ -33,83 +33,10 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
             <li className="nav-item">
               <NavLink
                 to="/"
-                exact
                 className="nav-link btn btn-outline-success px-3 py-2 me-2"
               >
                 Home
               </NavLink>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Transactions
-              </a>
-              <ul className="dropdown-menu bg-primary border-0 shadow-lg">
-                <li>
-                  <NavLink to="/transaction/new" className="dropdown-item">
-                    New Transaction
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/transaction/list" className="dropdown-item">
-                    Transaction List
-                  </NavLink>
-                </li>
-              </ul>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Budgets
-              </a>
-              <ul className="dropdown-menu bg-primary border-0 shadow-lg">
-                <li>
-                  <NavLink to="/newbudget" className="dropdown-item">
-                    New Budget
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/budgetlist" className="dropdown-item">
-                    Budget List
-                  </NavLink>
-                </li>
-              </ul>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Categories
-              </a>
-              <ul className="dropdown-menu bg-primary border-0 shadow-lg">
-                <li>
-                  <NavLink to="/category/new" className="dropdown-item">
-                    New Category
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/category/list" className="dropdown-item">
-                    Category List
-                  </NavLink>
-                </li>
-              </ul>
             </li>
             {!isAuthenticated && (
               <>
@@ -133,6 +60,78 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
             )}
             {isAuthenticated && (
               <>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Transactions
+                  </a>
+                  <ul className="dropdown-menu bg-primary border-0 shadow-lg">
+                    <li>
+                      <NavLink to="/transaction/new" className="dropdown-item">
+                        New Transaction
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/transaction/list" className="dropdown-item">
+                        Transaction List
+                      </NavLink>
+                    </li>
+                  </ul>
+                </li>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Budgets
+                  </a>
+                  <ul className="dropdown-menu bg-primary border-0 shadow-lg">
+                    <li>
+                      <NavLink to="/newbudget" className="dropdown-item">
+                        New Budget
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/budgetlist" className="dropdown-item">
+                        Budget List
+                      </NavLink>
+                    </li>
+                  </ul>
+                </li>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Categories
+                  </a>
+                  <ul className="dropdown-menu bg-primary border-0 shadow-lg">
+                    <li>
+                      <NavLink to="/category/new" className="dropdown-item">
+                        New Category
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/category/list" className="dropdown-item">
+                        Category List
+                      </NavLink>
+                    </li>
+                  </ul>
+                </li>
                 <li className="nav-item">
                   <span className="nav-link btn btn-outline-success px-3 py-2 me-2">
                     {fullName}

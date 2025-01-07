@@ -9,7 +9,7 @@ const DeleteConfirm = ({ transactions, setTransactions }) => {
   const deleteTransaction = async () => {
     const token = localStorage.getItem('token')
     try {
-      await axios.delete(`${BASE_URL}/transactions/${id}`, {
+      await axios.delete(`${BASE_URL}/transaction/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
