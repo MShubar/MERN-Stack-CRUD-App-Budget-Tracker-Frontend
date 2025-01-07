@@ -5,6 +5,11 @@ import axios from 'axios'
 import './App.css'
 import Nav from './components/Nav'
 import Home from './pages/transaction/Home'
+import BudgetList from './pages/budget/BudgetList'
+import BudgetForm from './pages/budget/BudgetForm'
+import BudgetDetails from './pages/budget/BudgetDetails'
+import BudgetUpdateForm from './pages/budget/BudgetUpdateForm'
+import BudgetDeleteConfirm from './pages/budget/BudgetDeleteConfirm'
 import TransactionList from './pages/transaction/TransactionList'
 import TransactionDetails from './pages/transaction/TransactionDetails'
 import TransactionUpdateForm from './pages/transaction/TransactionUpdateForm'
@@ -20,11 +25,31 @@ import Signup from './pages/auth/Signup'
 import Signin from './pages/auth/Signin'
 
 const App = () => {
+  const [budgets, setBudgets] = useState([])
   const [transactions, setTransactions] = useState([])
   const [categories, setCategories] = useState([])
-  const [budgets, setBudgets] = useState([])
   const [user, setUser] = useState()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    const getAllBudgets = async () => {
+      const token = localStorage.getItem('token')
+      if (token) {
+        try {
+          const response = await axios.get(`${BASE_URL}/budgets`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          setBudgets(response.data)
+        } catch (error) {
+          console.error('Error fetching budgets:', error)
+        }
+      }
+    }
+
+    getAllBudgets()
+  }, [])
 
   useEffect(() => {
     const getAllTransactions = async () => {
@@ -208,6 +233,43 @@ const App = () => {
                 <CategoryForm
                   categories={categories}
                   setCategories={setCategories}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/budgetlist"
+              element={<BudgetList budgets={budgets} />}
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/newbudget"
+              element={<BudgetForm budgets={budgets} setBudgets={setBudgets} />}
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/budgetlist/:id"
+              element={<BudgetDetails budgets={budgets} />}
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/updatebudget/:id"
+              element={
+                <BudgetUpdateForm budgets={budgets} setBudgets={setBudgets} />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/deletebudget/:id"
+              element={
+                <BudgetDeleteConfirm
+                  budgets={budgets}
+                  setBudgets={setBudgets}
                 />
               }
             />

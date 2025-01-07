@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
 import logo from '../assets/logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css' // Import Bootstrap styles
 
@@ -98,12 +97,12 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
                   </a>
                   <ul className="dropdown-menu bg-primary border-0 shadow-lg">
                     <li>
-                      <NavLink to="/budget/new" className="dropdown-item">
+                      <NavLink to="/newbudget" className="dropdown-item">
                         New Budget
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/budget/list" className="dropdown-item">
+                      <NavLink to="/budgetlist" className="dropdown-item">
                         Budget List
                       </NavLink>
                     </li>
