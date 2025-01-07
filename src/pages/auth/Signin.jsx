@@ -24,6 +24,7 @@ const Signin = ({ onLogin }) => {
       const response = await axios.post(`${BASE_URL}/users/signin`, formData)
       const token = response.data.token
       localStorage.setItem('token', token)
+      localStorage.setItem('userId', response.data.user._id)
       onLogin()
       navigate('/transactionlist')
 

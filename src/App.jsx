@@ -106,7 +106,7 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/budgetlist" element={<BudgetList budgets={budgets}/>} />
+          <Route path="/budgetlist" element={<BudgetList budgets={budgets} />} />
           <Route path="/newbudget" element={<BudgetForm budgets={budgets} setBudgets={setBudgets}/>} />
           <Route path="/budgetlist/:id" element={<BudgetDetails budgets={budgets} />} />
           <Route path="/updatebudget/:id" element={<BudgetUpdateForm budgets={budgets} setBudgets={setBudgets}/>} />
