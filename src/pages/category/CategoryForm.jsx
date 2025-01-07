@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BASE_URL } from '../../globals'
 
-const CategoryForm = ({ Categories, setCategories }) => {
+const CategoryForm = ({ categories, setCategories }) => {
   let navigate = useNavigate()
   const initialState = {
     name: ''
@@ -19,7 +19,7 @@ const CategoryForm = ({ Categories, setCategories }) => {
           Authorization: `Bearer ${token}`
         }
       })
-      setCategories([...Categories, response.data])
+      setCategories([...categories, response.data])
       setFormValues(initialState)
       navigate('/categorylist')
     } catch (error) {

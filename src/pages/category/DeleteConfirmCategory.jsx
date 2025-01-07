@@ -9,7 +9,7 @@ const DeleteConfirmCategory = ({ categories, setCategories }) => {
   const deleteCategory = async () => {
     const token = localStorage.getItem('token')
     try {
-      await axios.delete(`${BASE_URL}/categories/${id}`, {
+      await axios.delete(`${BASE_URL}/category/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

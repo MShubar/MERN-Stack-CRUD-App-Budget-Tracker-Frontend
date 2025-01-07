@@ -16,7 +16,7 @@ const CategoryUpdateForm = ({ categories, setCategories }) => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/categories/${id}`)
+        const response = await axios.get(`${BASE_URL}/category/${id}`)
         setFormValues(response.data)
       } catch (error) {
         console.error('Error fetching transaction:', error)
@@ -31,7 +31,7 @@ const CategoryUpdateForm = ({ categories, setCategories }) => {
     const token = localStorage.getItem('token')
     try {
       const response = await axios.put(
-        `${BASE_URL}/categories/${id}`,
+        `${BASE_URL}/category/${id}`,
         formValues,
         {
           headers: {
