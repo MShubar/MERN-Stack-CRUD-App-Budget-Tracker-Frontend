@@ -22,6 +22,8 @@ import Signin from './pages/auth/Signin'
 const App = () => {
   const [transactions, setTransactions] = useState([])
   const [categories, setCategories] = useState([])
+  const [budgets, setBudgets] = useState([])
+  const [user, setUser] = useState()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const App = () => {
       const token = localStorage.getItem('token')
       if (token) {
         try {
-          const response = await axios.get(`${BASE_URL}/transactions`, {
+          const response = await axios.get(`${BASE_URL}/transaction`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -40,7 +42,6 @@ const App = () => {
         }
       }
     }
-
     getAllTransactions()
   }, [])
   useEffect(() => {
@@ -48,19 +49,35 @@ const App = () => {
       const token = localStorage.getItem('token')
       if (token) {
         try {
-          const response = await axios.get(`${BASE_URL}/categories`, {
+          const response = await axios.get(`${BASE_URL}/category`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
           })
           setCategories(response.data)
         } catch (error) {
-          console.error('Error fetching transactions:', error)
+          console.error('Error fetching Category:', error)
+        }
+      }
+    }
+    const getAllBudgets = async () => {
+      const token = localStorage.getItem('token')
+      if (token) {
+        try {
+          const response = await axios.get(`${BASE_URL}/budget`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          setBudgets(response.data)
+        } catch (error) {
+          console.error('Error fetching budget:', error)
         }
       }
     }
 
     getAllCategories()
+    getAllBudgets()
   }, [])
   const handleLogin = () => {
     setIsAuthenticated(true)
@@ -79,82 +96,128 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/transaction/list"
-            element={<TransactionList transactions={transactions} />}
-          />
-          <Route
-            path="/transaction/list/:id"
-            element={<TransactionDetails transactions={transactions} />}
-          />
-          <Route
-            path="/transaction/update/:id"
-            element={
-              <TransactionUpdateForm
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
-          />
-          <Route
-            path="/transaction/delete/:id"
-            element={
-              <DeleteConfirm
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
-          />
-          <Route
-            path="/transaction/new"
-            element={
-              <TransactionForm
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
-          />
+          {user ? (
+            <Route
+              path="/transaction/list"
+              element={
+                <TransactionList transactions={transactions} user={user} />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/transaction/:id"
+              element={
+                <TransactionDetails
+                  transactions={transactions}
+                  categories={categories}
+                  budgets={budgets}
+                  user={user}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/transaction/"
+              element={
+                <TransactionDetails
+                  transactions={transactions}
+                  categories={categories}
+                  budgets={budgets}
+                  user={user}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/transaction/update/:id"
+              element={
+                <TransactionUpdateForm
+                  transactions={transactions}
+                  setTransactions={setTransactions}
+                  user={user}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/transaction/delete/:id"
+              element={
+                <DeleteConfirm
+                  transactions={transactions}
+                  setTransactions={setTransactions}
+                  user={user}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/transaction/new"
+              element={
+                <TransactionForm
+                  transactions={transactions}
+                  setTransactions={setTransactions}
+                  user={user}
+                />
+              }
+            />
+          ) : null}
           //
-          <Route
-            path="/category/list"
-            element={<CategoryList categories={categories} />}
-          />
-          <Route
-            path="/category/list/:id"
-            element={<CategoryDetails categories={categories} />}
-          />
-          <Route
-            path="/category/update/:id"
-            element={
-              <CategoryUpdateForm
-                categories={categories}
-                setCategories={setCategories}
-              />
-            }
-          />
-          <Route
-            path="/category/delete/:id"
-            element={
-              <DeleteConfirm
-                categories={categories}
-                setCategories={setCategories}
-              />
-            }
-          />
-          <Route
-            path="/category/new"
-            element={
-              <CategoryForm
-                categories={categories}
-                setCategories={setCategories}
-              />
-            }
-          />
+          {user ? (
+            <Route
+              path="/category/list"
+              element={<CategoryList categories={categories} />}
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/category/list/:id"
+              element={<CategoryDetails categories={categories} />}
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/category/update/:id"
+              element={
+                <CategoryUpdateForm
+                  categories={categories}
+                  setCategories={setCategories}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/category/delete/:id"
+              element={
+                <DeleteConfirm
+                  categories={categories}
+                  setCategories={setCategories}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/category/new"
+              element={
+                <CategoryForm
+                  categories={categories}
+                  setCategories={setCategories}
+                />
+              }
+            />
+          ) : null}
           <Route path="/auth/signup" element={<Signup />} />
           <Route
             path="/auth/signin"
-            element={<Signin onLogin={handleLogin} />}
+            element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
+          <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </main>
     </>
