@@ -29,6 +29,7 @@ const App = () => {
   const [transactions, setTransactions] = useState([])
   const [categories, setCategories] = useState([])
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [searchBar, setSearchBar] = useState('')
 
   useEffect(() => {
     const getAllBudgets = async () => {
@@ -98,22 +99,37 @@ const App = () => {
     setIsAuthenticated(false)
   }
 
+
+  const handleSearchBar = (event) => {
+    setSearchBar(event.target.value)
+  };
+
+  const filteredBudgets = budgets.filter((budget) => budget.name.toLowerCase().includes(searchBar.toLowerCase()))
+
+  const filteredTransactions = transactions.filter((transaction) => transaction.name.toLowerCase().includes(searchBar.toLowerCase()))
+
   return (
     <>
       <header>
         <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       </header>
       <main>
+        <input
+        type="text"
+        placeholder="Search for something.."
+        value={searchBar}
+        onChange={handleSearchBar}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/budgetlist" element={<BudgetList budgets={budgets} />} />
+          <Route path="/budgetlist" element={<BudgetList budgets={filteredBudgets} />} />
           <Route path="/newbudget" element={<BudgetForm budgets={budgets} setBudgets={setBudgets}/>} />
           <Route path="/budgetlist/:id" element={<BudgetDetails budgets={budgets} />} />
           <Route path="/updatebudget/:id" element={<BudgetUpdateForm budgets={budgets} setBudgets={setBudgets}/>} />
           <Route path="/deletebudget/:id" element={<BudgetDeleteConfirm budgets={budgets} setBudgets={setBudgets}/>} />
 
 
-          <Route path="/transactionlist" element={<TransactionList transactions={transactions} />}/>
+          <Route path="/transactionlist" element={<TransactionList transactions={filteredTransactions} />}/>
           <Route path="/transactionlist/:id" element={<TransactionDetails transactions={transactions} />}/>
           <Route path="/update/:id" element={ <TransactionUpdateForm transactions={transactions} setTransactions={setTransactions} />} />
           <Route path="/delete/:id"  element={ <DeleteConfirm transactions={transactions} setTransactions={setTransactions} />} />
