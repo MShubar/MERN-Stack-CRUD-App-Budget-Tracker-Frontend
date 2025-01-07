@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-const BudgetDetails = ( { budgets }) => {
+const BudgetDetails = ({ budgets }) => {
   let navigate = useNavigate()
   const { id } = useParams()
 
@@ -25,8 +25,12 @@ const BudgetDetails = ( { budgets }) => {
           <section className="budget-details">
             <h2>{budget.name}</h2>
             <h3>{budget.balance}</h3>
-            <button onClick={()=> navigate(`/updatebudget/${budget._id}`)}>Update Budget</button>
-            <button onClick={()=> navigate(`/deletebudget/${budget._id}`)}>Delete Budget</button>
+            <button onClick={() => navigate(`/updatebudget/${budget._id}`)}>
+              Update
+            </button>
+            <button onClick={() => navigate(`/deletebudget/${budget._id}`)}>
+              Delete
+            </button>
           </section>
         </>
       ) : (

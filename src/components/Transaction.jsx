@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 const Transaction = ({ transaction }) => {
   return (
-    <Link to={`/transaction/list/${transaction._id}`}>
+    <Link to={`/transaction/${transaction._id}`}>
       <div className="transaction-card" key={transaction._id}>
         <h2>{transaction.name}</h2>
       </div>
