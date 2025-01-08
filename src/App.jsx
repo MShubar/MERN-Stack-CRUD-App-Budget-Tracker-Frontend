@@ -189,7 +189,6 @@ const App = () => {
                   transactions={filteredTransactions}
                   user={user}
                 />
-
               }
             />
           ) : null}
