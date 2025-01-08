@@ -25,6 +25,10 @@ import Signup from './pages/auth/Signup'
 import Signin from './pages/auth/Signin'
 import Dashboard from './pages/Dashboard'
 
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
+import CalendarPage from './pages/CalendarPage'
+
 const App = () => {
   const [budgets, setBudgets] = useState([])
   const [transactions, setTransactions] = useState([])
@@ -33,7 +37,9 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [searchBar, setSearchBar] = useState('')
 
+
   const location = useLocation()
+
   useEffect(() => {
     const getAllBudgets = async () => {
       const token = localStorage.getItem('token')
@@ -344,6 +350,8 @@ const App = () => {
             element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
           <Route path="*" element={<h1>404</h1>} />
+          <Route path="/calendar" element={<CalendarPage />}
+          />
         </Routes>
       </main>
     </>
