@@ -96,30 +96,6 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    Transactions
-                  </a>
-                  <ul className="dropdown-menu bg-primary border-0 shadow-lg">
-                    <li>
-                      <NavLink to="/transaction/new" className="dropdown-item">
-                        New Transaction
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/transaction/list" className="dropdown-item">
-                        Transaction List
-                      </NavLink>
-                    </li>
-                  </ul>
-                </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
                     Budgets
                   </a>
                   <ul className="dropdown-menu bg-primary border-0 shadow-lg">
@@ -135,6 +111,31 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
                     </li>
                   </ul>
                 </li>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Transactions
+                  </a>
+                  <ul className="dropdown-menu bg-primary border-0 shadow-lg">
+                    <li>
+                      <NavLink to="/transaction/new" className="dropdown-item">
+                        New Transaction
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/transaction/list" className="dropdown-item">
+                        Transaction List
+                      </NavLink>
+                    </li>
+                  </ul>
+                </li>
+
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"

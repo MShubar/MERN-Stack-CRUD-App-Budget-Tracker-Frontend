@@ -37,7 +37,6 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [searchBar, setSearchBar] = useState('')
 
-
   const location = useLocation()
 
   useEffect(() => {
@@ -350,8 +349,7 @@ const App = () => {
             element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
           <Route path="*" element={<h1>404</h1>} />
-          <Route path="/calendar" element={<CalendarPage />}
-          />
+          <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
       </main>
     </>
