@@ -1,10 +1,10 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { BASE_URL } from './globals'
 import axios from 'axios'
 import './App.css'
 import Nav from './components/Nav'
-import Home from './pages/transaction/Home'
+import Home from './pages/Home'
 import BudgetList from './pages/budget/BudgetList'
 import BudgetForm from './pages/budget/BudgetForm'
 import BudgetDetails from './pages/budget/BudgetDetails'
@@ -23,6 +23,7 @@ import CategoryUpdateForm from './pages/category/CategoryUpdateForm'
 import DeleteConfirmCategory from './pages/category/DeleteConfirmCategory'
 import Signup from './pages/auth/Signup'
 import Signin from './pages/auth/Signin'
+import Dashboard from './pages/Dashboard'
 
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
@@ -37,6 +38,7 @@ const App = () => {
   const [searchBar, setSearchBar] = useState('')
 
 
+  const location = useLocation()
 
   useEffect(() => {
     const getAllBudgets = async () => {
@@ -134,21 +136,57 @@ const App = () => {
   const filteredCategories = categories.filter((category) =>
     category.name.toLowerCase().includes(searchBar.toLowerCase())
   )
-
+  const routesWithSearchBar = [
+    '/transaction/list',
+    '/budgetlist',
+    '/categorylist'
+  ]
   return (
     <>
       <header>
-        <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-        <input
-          type="text"
-          placeholder="Search for something.."
-          value={searchBar}
-          onChange={handleSearchBar}
-        />
+        <div className="col-md-8">
+          <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        </div>
       </header>
       <main>
+        {routesWithSearchBar.includes(location.pathname) && (
+          <div className="d-flex justify-content-center mt-4">
+            <input
+              type="text"
+              className="form-control w-50"
+              placeholder="Search for something..."
+              value={searchBar}
+              onChange={handleSearchBar}
+            />
+          </div>
+        )}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                transactions={transactions}
+                categories={categories}
+                budgets={budgets}
+                user={user}
+                isAuthenticated={isAuthenticated}
+              />
+            }
+          />
+          {user ? (
+            <Route
+              path="/dashboard"
+              element={
+                <Dashboard
+                  transactions={transactions}
+                  categories={categories}
+                  budgets={budgets}
+                  user={user}
+                  isAuthenticated={isAuthenticated}
+                />
+              }
+            />
+          ) : null}
           {user ? (
             <Route
               path="/transaction/list"
@@ -157,7 +195,6 @@ const App = () => {
                   transactions={filteredTransactions}
                   user={user}
                 />
-
               }
             />
           ) : null}

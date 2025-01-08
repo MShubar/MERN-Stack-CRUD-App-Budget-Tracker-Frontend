@@ -29,7 +29,7 @@ const Signin = ({ onLogin, setUser }) => {
       localStorage.setItem('token', token)
       localStorage.setItem('userId', response.data.user._id)
       onLogin()
-      navigate('/')
+      navigate('/dashboard')
 
       setFormData(initialFormData)
     } catch (error) {
