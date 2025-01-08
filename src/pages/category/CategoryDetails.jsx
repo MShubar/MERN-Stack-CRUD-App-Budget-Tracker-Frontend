@@ -22,14 +22,10 @@ const CategoryDetails = ({ categories }) => {
           <section className="transaction-details">
             <h2>category Name: {category.name}</h2>
 
-            <button
-              onClick={() => navigate(`/category/update/${category._id}`)}
-            >
+            <button onClick={() => navigate(`/categoryupdate/${category._id}`)}>
               Update Category
             </button>
-            <button
-              onClick={() => navigate(`/category/delete/${category._id}`)}
-            >
+            <button onClick={() => navigate(`/categorydelete/${category._id}`)}>
               Delete Category
             </button>
           </section>

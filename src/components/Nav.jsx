@@ -121,12 +121,12 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
                   </a>
                   <ul className="dropdown-menu bg-primary border-0 shadow-lg">
                     <li>
-                      <NavLink to="/category/new" className="dropdown-item">
+                      <NavLink to="/newcategory" className="dropdown-item">
                         New Category
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/category/list" className="dropdown-item">
+                      <NavLink to="/categorylist" className="dropdown-item">
                         Category List
                       </NavLink>
                     </li>

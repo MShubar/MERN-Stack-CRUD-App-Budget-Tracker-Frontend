@@ -9,14 +9,14 @@ const DeleteConfirmCategory = ({ categories, setCategories }) => {
   const deleteCategory = async () => {
     const token = localStorage.getItem('token')
     try {
-      await axios.delete(`${BASE_URL}/categories/${id}`, {
+      await axios.delete(`${BASE_URL}/category/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
       let index = categories.findIndex((category) => category._id === id)
       setCategories(categories.toSpliced(index, 1))
-      navigate('/Category/list')
+      navigate('/Categorylist')
     } catch (error) {
       console.error('Error updating transaction:', error)
     }
@@ -25,7 +25,7 @@ const DeleteConfirmCategory = ({ categories, setCategories }) => {
   return (
     <div>
       <h1>Are you sure you want to delete this transaction?</h1>
-      <button onClick={() => navigate(`/Category/list/${id}`)}>No</button>
+      <button onClick={() => navigate(`/Categorylist/${id}`)}>No</button>
       <button onClick={deleteCategory}>Yes</button>
     </div>
   )
