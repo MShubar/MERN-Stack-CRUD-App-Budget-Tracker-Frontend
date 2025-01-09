@@ -19,11 +19,8 @@ const Signin = ({ onLogin, setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      //console.log(`${BASE_URL}/users/signin`)
       const response = await axios.post(`${BASE_URL}/users/signin`, formData)
       setUser(response.data.user)
-      //console.log('User Loged in Data---------', response.data)
-      // console.log('User ID---------', response.data.user._id)
 
       const token = response.data.token
       localStorage.setItem('token', token)
@@ -40,6 +37,7 @@ const Signin = ({ onLogin, setUser }) => {
   return (
     <main className="container mt-5">
       <h1 className="text-center mb-4">Log In</h1>
+
       {message && <p className="text-danger text-center">{message}</p>}
       <form autoComplete="off" onSubmit={handleSubmit} className="mx-auto w-50">
         <div className="mb-3">
