@@ -159,6 +159,11 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
                     </li>
                   </ul>
                 </li>
+                <li>
+                  <NavLink to="/calendar" className="nav-link btn btn-outline-success px-3 py-2 me-2">
+                  Calendar
+                  </NavLink>
+                </li>
                 <li className="nav-item">
                   <span className="nav-link btn btn-outline-success px-3 py-2 me-2">
                     {fullName}
