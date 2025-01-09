@@ -39,11 +39,13 @@ const TransactionDetails = ({ transactions, categories, budgets, user }) => {
             <h3>Recurring: {transaction.recurring}</h3>
 
             <button
+              className="btn btn-primary btn-sm mb-2"
               onClick={() => navigate(`/transaction/update/${transaction._id}`)}
             >
               Update
             </button>
             <button
+              className="btn btn-danger btn-sm"
               onClick={() => navigate(`/transaction/delete/${transaction._id}`)}
             >
               Delete

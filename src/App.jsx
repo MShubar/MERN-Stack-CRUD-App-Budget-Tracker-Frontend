@@ -280,7 +280,14 @@ const App = () => {
           {user ? (
             <Route
               path="/categorylist/:id"
-              element={<CategoryDetails categories={categories} />}
+              element={
+                <CategoryDetails
+                  transactions={transactions}
+                  categories={categories}
+                  budgets={budgets}
+                  user={user}
+                />
+              }
             />
           ) : null}
           {user ? (
@@ -343,13 +350,13 @@ const App = () => {
               }
             />
           ) : null}
+          {user ? <Route path="/calendar" element={<CalendarPage />} /> : null}
           <Route path="/auth/signup" element={<Signup />} />
           <Route
             path="/auth/signin"
             element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
           <Route path="*" element={<h1>404</h1>} />
-          <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
       </main>
     </>

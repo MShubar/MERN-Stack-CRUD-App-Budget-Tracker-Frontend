@@ -5,17 +5,14 @@ import axios from 'axios'
 import { BASE_URL } from '../globals'
 
 const CalendarPage = () => {
-    const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(new Date())
 
-    return (
-        <div>
+  return (
+    <div>
       <h1>Track here</h1>
-      <Calendar
-        onChange={setDate}
-        value={date}
-      />
-      </div>
-    )
+      <Calendar onChange={setDate} value={date} />
+    </div>
+  )
 }
 
 export default CalendarPage

@@ -11,6 +11,7 @@ import {
   ListItem,
   ListItemText
 } from '@mui/material'
+import { Link } from 'react-router'
 
 const getMonthlyTransactionData = (transactions) => {
   const monthlyData = Array(12).fill(0)
@@ -109,10 +110,15 @@ const Dashboard = ({ transactions }) => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
+                transition={{ duration: 2 }}
               >
                 <Typography variant="h5" component="h2" gutterBottom>
-                  Category Distribution
+                  <Link
+                    style={{ textDecoration: 'none', color: 'black' }}
+                    to="/categorylist"
+                  >
+                    Category Distribution
+                  </Link>
                 </Typography>
                 <PieChart
                   series={[
@@ -144,10 +150,15 @@ const Dashboard = ({ transactions }) => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
+                transition={{ duration: 2 }}
               >
                 <Typography variant="h5" component="h2" gutterBottom>
-                  Monthly Net Spent
+                  <Link
+                    style={{ textDecoration: 'none', color: 'black' }}
+                    to="/transaction/list"
+                  >
+                    Monthly Net Spent
+                  </Link>
                 </Typography>
                 <BarChart
                   xAxis={[

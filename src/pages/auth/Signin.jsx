@@ -37,6 +37,7 @@ const Signin = ({ onLogin, setUser }) => {
   return (
     <main className="container mt-5">
       <h1 className="text-center mb-4">Log In</h1>
+
       {message && <p className="text-danger text-center">{message}</p>}
       <form autoComplete="off" onSubmit={handleSubmit} className="mx-auto w-50">
         <div className="mb-3">
