@@ -20,9 +20,9 @@ const getMonthlyTransactionData = (transactions) => {
   transactions.forEach((transaction) => {
     const monthIndex = new Date(transaction.date).getMonth()
     if (transaction.type === 'Debit') {
-      monthlyDebitedData[monthIndex] += transaction.amount
-    } else if (transaction.type === 'Credit') {
       monthlyCreditedData[monthIndex] += transaction.amount
+    } else if (transaction.type === 'Credit') {
+      monthlyDebitedData[monthIndex] += transaction.amount
     }
   })
 
@@ -80,10 +80,9 @@ const Dashboard = ({ transactions }) => {
           }
         })
       },
-      { threshold: 0.5 } // Trigger when 50% of the component is visible
+      { threshold: 0.5 }
     )
 
-    // Observe each component
     document.querySelectorAll('.section').forEach((section) => {
       observer.observe(section)
     })
@@ -148,7 +147,7 @@ const Dashboard = ({ transactions }) => {
                 transition={{ duration: 1 }}
               >
                 <Typography variant="h5" component="h2" gutterBottom>
-                  Monthly Net Balance
+                  Monthly Net Spent
                 </Typography>
                 <BarChart
                   xAxis={[
@@ -173,7 +172,7 @@ const Dashboard = ({ transactions }) => {
                   series={[
                     {
                       data: monthlyData,
-                      label: 'Monthly Balance'
+                      label: 'Monthly Spending'
                     }
                   ]}
                   width={500}
@@ -208,7 +207,7 @@ const Dashboard = ({ transactions }) => {
                   key={index}
                   initial={{ opacity: 0, translateY: 20 }}
                   animate={{ opacity: 1, translateY: 0 }}
-                  transition={{ duration: 3, delay: index * 0.1 }}
+                  transition={{ duration: 1, delay: index * 0.7 }}
                 >
                   <ListItem>
                     <ListItemText

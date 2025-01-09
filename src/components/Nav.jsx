@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../assets/logo.svg'
-import 'bootstrap/dist/css/bootstrap.min.css' // Import Bootstrap styles
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-const Nav = ({ isAuthenticated, onLogout, fullName }) => {
+const Nav = ({ isAuthenticated, onLogout }) => {
   const [isScrolled, setIsScrolled] = useState(false)
+
+  const notifications = [
+    { id: 1, message: 'New budget created' },
+    { id: 2, message: 'Transaction recorded' },
+    { id: 3, message: 'New category added' }
+  ]
+
+  const [unreadCount, setUnreadCount] = useState(notifications.length)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,6 +95,7 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
                     Dashboard
                   </NavLink>
                 </li>
+
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
@@ -135,7 +144,6 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
                     </li>
                   </ul>
                 </li>
-
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle btn btn-outline-success px-3 py-2 me-2"
@@ -160,11 +168,64 @@ const Nav = ({ isAuthenticated, onLogout, fullName }) => {
                     </li>
                   </ul>
                 </li>
-                <li className="nav-item">
-                  <span className="nav-link btn btn-outline-success px-3 py-2 me-2">
-                    {fullName}
-                  </span>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link "
+                    href="#"
+                    id="navbarDropdownNotifications"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {unreadCount > 0 ? (
+                      <>
+                        <svg
+                          fill="#000000"
+                          width="20px"
+                          height="20px"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M20,18H4l2-2V10a6,6,0,0,1,5-5.91V3a1,1,0,0,1,2,0V4.09a5.9,5.9,0,0,1,1.3.4A3.992,3.992,0,0,0,18,10v6Zm-8,4a2,2,0,0,0,2-2H10A2,2,0,0,0,12,22ZM18,4a2,2,0,1,0,2,2A2,2,0,0,0,18,4Z" />
+                        </svg>
+                        <span className="badge bg-danger ms-2">
+                          {unreadCount}
+                        </span>
+                      </>
+                    ) : (
+                      <svg
+                        fill="#000000"
+                        width="20px"
+                        height="20px"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10,20h4a2,2,0,0,1-4,0Zm8-4V10a6,6,0,0,0-5-5.91V3a1,1,0,0,0-2,0V4.09A6,6,0,0,0,6,10v6L4,18H20Z" />
+                      </svg>
+                    )}
+                  </a>
+                  <ul
+                    className="dropdown-menu bg-primary border-0 shadow-lg"
+                    aria-labelledby="navbarDropdownNotifications"
+                  >
+                    {notifications.length === 0 ? (
+                      <li>
+                        <span className="dropdown-item">
+                          No new notifications
+                        </span>
+                      </li>
+                    ) : (
+                      notifications.map((notification) => (
+                        <li key={notification.id}>
+                          <span className="dropdown-item">
+                            {notification.message}
+                          </span>
+                        </li>
+                      ))
+                    )}
+                  </ul>
                 </li>
+
                 <li className="nav-item">
                   <NavLink
                     to="/"

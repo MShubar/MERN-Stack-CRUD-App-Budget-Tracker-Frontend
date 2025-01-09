@@ -19,11 +19,8 @@ const Signin = ({ onLogin, setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      //console.log(`${BASE_URL}/users/signin`)
       const response = await axios.post(`${BASE_URL}/users/signin`, formData)
       setUser(response.data.user)
-      //console.log('User Loged in Data---------', response.data)
-      // console.log('User ID---------', response.data.user._id)
 
       const token = response.data.token
       localStorage.setItem('token', token)

@@ -47,7 +47,6 @@ const TransactionUpdateForm = ({ transactions, setTransactions }) => {
       }
     }
 
-    // fetchTransaction()
     fetchBudgets()
     fetchCategories()
   }, [id, transactions])
