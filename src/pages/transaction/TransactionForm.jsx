@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BASE_URL } from '../../globals'
 
-const TransactionForm = ({ transactions, setTransactions, user }) => {
+const TransactionForm = ({
+  transactions,
+  setTransactions,
+  budgets,
+  setBudgets
+}) => {
   let navigate = useNavigate()
   const initialState = {
     name: '',
@@ -18,18 +23,10 @@ const TransactionForm = ({ transactions, setTransactions, user }) => {
     budgetId: ''
   }
   const [formValues, setFormValues] = useState(initialState)
-  const [budgets, setBudgets] = useState([])
+
   const [categories, setCategories] = useState([])
   useEffect(() => {
     // Fetch budgets from the database
-    const fetchBudgets = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/budgets`)
-        setBudgets(response.data)
-      } catch (error) {
-        console.error('Error fetching budgets:', error)
-      }
-    }
 
     // Fetch categories from the database
     const fetchCategories = async () => {
@@ -41,13 +38,14 @@ const TransactionForm = ({ transactions, setTransactions, user }) => {
       }
     }
 
-    fetchBudgets()
     fetchCategories()
   }, [])
   const handleSubmit = async (event) => {
     event.preventDefault()
     const token = localStorage.getItem('token')
     try {
+      console.log(formValues)
+
       const response = await axios.post(`${BASE_URL}/transaction`, formValues, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -216,6 +214,7 @@ const TransactionForm = ({ transactions, setTransactions, user }) => {
               value={formValues.priority}
               required
             >
+              <option value="">Select Priority</option>
               <option value="High">High</option>
               <option value="Medium">Medium</option>
               <option value="Low">Low</option>

@@ -38,27 +38,21 @@ const App = () => {
   const [searchBar, setSearchBar] = useState('')
 
   const location = useLocation()
-
-  useEffect(() => {
-    const getAllBudgets = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        try {
-          const response = await axios.get(`${BASE_URL}/budgets`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          setBudgets(response.data)
-        } catch (error) {
-          console.error('Error fetching budgets:', error)
-        }
+  const getAllBudgets = async () => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      try {
+        const response = await axios.get(`${BASE_URL}/budgets`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setBudgets(response.data)
+      } catch (error) {
+        console.error('Error fetching budgets:', error)
       }
     }
-
-    getAllBudgets()
-  }, [])
-
+  }
   useEffect(() => {
     const getAllTransactions = async () => {
       const token = localStorage.getItem('token')
@@ -93,22 +87,6 @@ const App = () => {
         }
       }
     }
-    const getAllBudgets = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        try {
-          const response = await axios.get(`${BASE_URL}/budget`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          setBudgets(response.data)
-        } catch (error) {
-          console.error('Error fetching budget:', error)
-        }
-      }
-    }
-
     getAllCategories()
     getAllBudgets()
   }, [])
@@ -254,7 +232,8 @@ const App = () => {
                 <TransactionForm
                   transactions={transactions}
                   setTransactions={setTransactions}
-                  user={user}
+                  budgets={budgets}
+                  setBudgets={setBudgets}
                 />
               }
             />
@@ -280,14 +259,7 @@ const App = () => {
           {user ? (
             <Route
               path="/categorylist/:id"
-              element={
-                <CategoryDetails
-                  transactions={transactions}
-                  categories={categories}
-                  budgets={budgets}
-                  user={user}
-                />
-              }
+              element={<CategoryDetails categories={categories} />}
             />
           ) : null}
           {user ? (
@@ -346,17 +318,19 @@ const App = () => {
                 <BudgetDeleteConfirm
                   budgets={budgets}
                   setBudgets={setBudgets}
+                  transactions={transactions}
+                  setTransactions={setTransactions}
                 />
               }
             />
           ) : null}
-          {user ? <Route path="/calendar" element={<CalendarPage />} /> : null}
           <Route path="/auth/signup" element={<Signup />} />
           <Route
             path="/auth/signin"
             element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
           <Route path="*" element={<h1>404</h1>} />
+          <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
       </main>
     </>
