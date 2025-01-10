@@ -195,7 +195,6 @@ const TransactionUpdateForm = ({ transactions, setTransactions }) => {
               className="form-control"
               value={formValues.date}
               onChange={handleChange}
-              required
             />
           </div>
 

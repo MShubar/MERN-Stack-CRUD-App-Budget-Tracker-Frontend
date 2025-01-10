@@ -28,12 +28,10 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
     const filteredTransactions = transactions.filter((transaction) => {
       const transactionDate = new Date(transaction.date)
 
-      // Check for Monthly transactions (same day of the month)
       const isMonthly =
         transaction.recurring === 'Monthly' &&
         transactionDate.getDate() === currentDay
 
-      // Check for Yearly transactions (same day and month)
       const isYearly =
         transaction.recurring === 'Annually' &&
         transactionDate.getDate() === currentDay &&
@@ -42,15 +40,14 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
       return isMonthly || isYearly
     })
 
-    // Generate notifications based on filtered transactions
     const newNotifications = filteredTransactions.map((transaction) => ({
       id: transaction._id,
-      message: `${transaction.name} - ${transaction.amount} ${transaction.type}`
+      message: `${transaction.name} - ${transaction.amount} BD`
     }))
 
     setNotifications(newNotifications)
-    setUnreadCount(newNotifications.length) // Count unread notifications
-  }, [transactions]) // Re-run whenever transactions change
+    setUnreadCount(newNotifications.length)
+  }, [transactions])
 
   return (
     <nav
@@ -60,14 +57,26 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
     >
       <div className="container-fluid">
         <div className="navbar-logo">
-          <NavLink to="/">
-            <img
-              src={logo}
-              alt="Logo"
-              className="navbar-brand"
-              style={{ width: '100px', height: 'auto' }}
-            />
-          </NavLink>
+          {!isAuthenticated && (
+            <NavLink to="/">
+              <img
+                src={logo}
+                alt="Logo"
+                className="navbar-brand"
+                style={{ width: '100px', height: 'auto' }}
+              />
+            </NavLink>
+          )}
+          {isAuthenticated && (
+            <NavLink to="/dashboard">
+              <img
+                src={logo}
+                alt="Logo"
+                className="navbar-brand"
+                style={{ width: '100px', height: 'auto' }}
+              />
+            </NavLink>
+          )}
         </div>
         <button
           className="navbar-toggler border-0"
@@ -239,7 +248,7 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                     )}
                   </a>
                   <ul
-                    className="dropdown-menu bg-primary border-0 shadow-lg"
+                    className="dropdown-menu dropdown-menu-end bg-primary border-0 shadow-lg"
                     aria-labelledby="navbarDropdownNotifications"
                   >
                     {notifications.length === 0 ? (
