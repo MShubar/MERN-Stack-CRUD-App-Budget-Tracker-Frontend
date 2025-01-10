@@ -25,10 +25,16 @@ const BudgetDetails = ({ budgets }) => {
           <section className="budget-details">
             <h2>{budget.name}</h2>
             <h3>{budget.balance}</h3>
-            <button onClick={() => navigate(`/updatebudget/${budget._id}`)}>
+            <button
+              className="btn btn-primary btn-sm mb-2"
+              onClick={() => navigate(`/updatebudget/${transaction._id}`)}
+            >
               Update
             </button>
-            <button onClick={() => navigate(`/deletebudget/${budget._id}`)}>
+            <button
+              className="btn btn-danger btn-sm"
+              onClick={() => navigate(`/deletebudget/${transaction._id}`)}
+            >
               Delete
             </button>
           </section>

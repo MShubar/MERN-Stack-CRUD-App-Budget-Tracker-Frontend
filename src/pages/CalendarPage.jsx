@@ -5,7 +5,7 @@ import axios from 'axios'
 import { BASE_URL } from '../globals'
 
 const CalendarPage = () => {
-    const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(new Date())
 
     return (
         <div className="calendar-wrapper">
@@ -19,6 +19,7 @@ const CalendarPage = () => {
           </div>
           </div>
     )
+
 }
 
 export default CalendarPage
