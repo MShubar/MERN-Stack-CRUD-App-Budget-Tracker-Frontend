@@ -169,11 +169,6 @@ const Nav = ({ isAuthenticated, onLogout }) => {
                   </ul>
                 </li>
                 <li>
-                  <NavLink to="/calendar" className="nav-link btn btn-outline-success px-3 py-2 me-2">
-                  Calendar
-                  </NavLink>
-                </li>
-                <li className="nav-item">
                   <NavLink
                     to="/calendar"
                     className="nav-link btn btn-outline-success px-3 py-2 me-2"
@@ -181,6 +176,7 @@ const Nav = ({ isAuthenticated, onLogout }) => {
                     Calendar
                   </NavLink>
                 </li>
+                <li className="nav-item"></li>
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link "

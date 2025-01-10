@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const BudgetDetails = ({ budgets }) => {
   let navigate = useNavigate()
@@ -25,18 +26,18 @@ const BudgetDetails = ({ budgets }) => {
           <section className="budget-details">
             <h2>{budget.name}</h2>
             <h3>{budget.balance}</h3>
-            <button
+            <Link
               className="btn btn-primary btn-sm mb-2"
-              onClick={() => navigate(`/updatebudget/${transaction._id}`)}
+              to={`/updatebudget/${budget._id}`}
             >
               Update
-            </button>
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => navigate(`/deletebudget/${transaction._id}`)}
+            </Link>
+            <Link
+              className="btn btn-primary btn-sm mb-2"
+              to={`/deletebudget/${budget._id}`}
             >
               Delete
-            </button>
+            </Link>
           </section>
         </>
       ) : (
