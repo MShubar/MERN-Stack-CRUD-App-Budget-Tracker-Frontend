@@ -16,16 +16,27 @@ export const CategoryDetails = ({ categories, transactions }) => {
     }
 
     const getCategoryTransactions = () => {
-      const filteredTransactions = transactions.filter(
-        (transaction) => transaction.category.toString() === id
-      )
-      setCategoryTransactions(filteredTransactions)
+      console.log('Category ID:', id)
+      if (transactions && Array.isArray(transactions)) {
+        const filteredTransactions = transactions.filter((transaction) => {
+          console.log('Transaction Category:', transaction.category)
+          return transaction.category.toString() === id
+        })
+        setCategoryTransactions(filteredTransactions)
+      } else {
+        setCategoryTransactions([])
+      }
     }
 
     getCategory()
     getCategoryTransactions()
-    setLoading(false) // Stop loading after data is fetched
   }, [categories, transactions, id])
+
+  useEffect(() => {
+    if (category !== null) {
+      setLoading(false)
+    }
+  }, [category]) // set loading to false once category is available
 
   if (loading) {
     return (
@@ -59,53 +70,6 @@ export const CategoryDetails = ({ categories, transactions }) => {
         >
           Delete
         </Link>
-      </section>
-
-      <section>
-        <h3>Transactions in this Category:</h3>
-        {categoryTransactions.length > 0 ? (
-          <div className="list-group">
-            {categoryTransactions.map((transaction) => (
-              <div
-                key={transaction._id}
-                className="list-group-item d-flex justify-content-between align-items-center mb-3 p-3"
-              >
-                <div>
-                  <h5>Transaction ID: {transaction._id}</h5>
-                  <p>
-                    <strong>Amount:</strong> {transaction.amount.toFixed(2)}
-                  </p>
-                  <p>
-                    <strong>Description:</strong>{' '}
-                    {transaction.description || 'N/A'}
-                  </p>
-                  <p>
-                    <strong>Type:</strong> {transaction.type}
-                  </p>
-                  <p>
-                    <strong>Priority:</strong> {transaction.priority}
-                  </p>
-                </div>
-                <div className="d-flex flex-column align-items-end">
-                  <Link
-                    className="btn btn-primary btn-sm mb-2"
-                    to={`/transactions/update/${transaction._id}`}
-                  >
-                    Update
-                  </Link>
-                  <Link
-                    className="btn btn-primary btn-sm mb-2"
-                    to={`/transactions/delete/${transaction._id}`}
-                  >
-                    Delete
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>No transactions for this category.</p>
-        )}
       </section>
     </div>
   )

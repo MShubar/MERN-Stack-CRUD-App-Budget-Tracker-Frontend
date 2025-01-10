@@ -183,7 +183,7 @@ const Dashboard = ({ transactions }) => {
                   series={[
                     {
                       data: monthlyData,
-                      label: 'Monthly Spending'
+                      label: 'Monthly Spending BD'
                     }
                   ]}
                   width={500}
@@ -220,31 +220,36 @@ const Dashboard = ({ transactions }) => {
                   animate={{ opacity: 1, translateY: 0 }}
                   transition={{ duration: 1, delay: index * 0.7 }}
                 >
-                  <ListItem>
-                    <ListItemText
-                      primary={
-                        <>
-                          <Typography
-                            component="span"
-                            sx={{
-                              fontWeight: 'bold',
-                              color:
-                                transaction.type === 'Debit' ? 'red' : 'green'
-                            }}
-                          >
-                            {transaction.type === 'Debit' ? '-' : '+'}{' '}
-                            {transaction.amount}
-                          </Typography>{' '}
-                          <Typography component="span" sx={{ color: 'gray' }}>
-                            (Category: {transaction.name})
-                          </Typography>
-                        </>
-                      }
-                      secondary={`Date: ${new Date(
-                        transaction.date
-                      ).toLocaleDateString()}`}
-                    />
-                  </ListItem>
+                  <Link
+                    style={{ textDecoration: 'none', color: 'black' }}
+                    to={`/transaction/${transaction._id}`}
+                  >
+                    <ListItem>
+                      <ListItemText
+                        primary={
+                          <>
+                            <Typography
+                              component="span"
+                              sx={{
+                                fontWeight: 'bold',
+                                color:
+                                  transaction.type === 'Debit' ? 'red' : 'green'
+                              }}
+                            >
+                              {transaction.type === 'Debit' ? '-' : '+'}{' '}
+                              {transaction.amount} BD
+                            </Typography>{' '}
+                            <Typography component="span" sx={{ color: 'gray' }}>
+                              (Category: {transaction.name})
+                            </Typography>
+                          </>
+                        }
+                        secondary={`Date: ${new Date(
+                          transaction.date
+                        ).toLocaleDateString()}`}
+                      />
+                    </ListItem>
+                  </Link>
                 </motion.div>
               ))}
             </List>

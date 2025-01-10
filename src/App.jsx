@@ -122,7 +122,11 @@ const App = () => {
     <>
       <header>
         <div className="col-md-8">
-          <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+          <Nav
+            isAuthenticated={isAuthenticated}
+            onLogout={handleLogout}
+            transactions={transactions}
+          />
         </div>
       </header>
       <main>

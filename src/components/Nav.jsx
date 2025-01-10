@@ -3,16 +3,10 @@ import { NavLink } from 'react-router-dom'
 import logo from '../assets/logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const Nav = ({ isAuthenticated, onLogout }) => {
+const Nav = ({ isAuthenticated, onLogout, transactions }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-
-  const notifications = [
-    { id: 1, message: 'New budget created' },
-    { id: 2, message: 'Transaction recorded' },
-    { id: 3, message: 'New category added' }
-  ]
-
-  const [unreadCount, setUnreadCount] = useState(notifications.length)
+  const [notifications, setNotifications] = useState([])
+  const [unreadCount, setUnreadCount] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +21,34 @@ const Nav = ({ isAuthenticated, onLogout }) => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const currentDay = new Date().getDate()
+    const currentMonth = new Date().getMonth()
+
+    const filteredTransactions = transactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.date)
+
+      const isMonthly =
+        transaction.recurring === 'Monthly' &&
+        transactionDate.getDate() === currentDay
+
+      const isYearly =
+        transaction.recurring === 'Annually' &&
+        transactionDate.getDate() === currentDay &&
+        transactionDate.getMonth() === currentMonth
+
+      return isMonthly || isYearly
+    })
+
+    const newNotifications = filteredTransactions.map((transaction) => ({
+      id: transaction._id,
+      message: `${transaction.name} - ${transaction.amount} BD`
+    }))
+
+    setNotifications(newNotifications)
+    setUnreadCount(newNotifications.length)
+  }, [transactions])
+
   return (
     <nav
       className={`navbar navbar-expand-lg ${
@@ -35,14 +57,26 @@ const Nav = ({ isAuthenticated, onLogout }) => {
     >
       <div className="container-fluid">
         <div className="navbar-logo">
-          <NavLink to="/">
-            <img
-              src={logo}
-              alt="Logo"
-              className="navbar-brand"
-              style={{ width: '100px', height: 'auto' }}
-            />
-          </NavLink>
+          {!isAuthenticated && (
+            <NavLink to="/">
+              <img
+                src={logo}
+                alt="Logo"
+                className="navbar-brand"
+                style={{ width: '100px', height: 'auto' }}
+              />
+            </NavLink>
+          )}
+          {isAuthenticated && (
+            <NavLink to="/dashboard">
+              <img
+                src={logo}
+                alt="Logo"
+                className="navbar-brand"
+                style={{ width: '100px', height: 'auto' }}
+              />
+            </NavLink>
+          )}
         </div>
         <button
           className="navbar-toggler border-0"
@@ -176,7 +210,7 @@ const Nav = ({ isAuthenticated, onLogout }) => {
                     Calendar
                   </NavLink>
                 </li>
-                <li className="nav-item"></li>
+
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link "
@@ -214,7 +248,7 @@ const Nav = ({ isAuthenticated, onLogout }) => {
                     )}
                   </a>
                   <ul
-                    className="dropdown-menu bg-primary border-0 shadow-lg"
+                    className="dropdown-menu dropdown-menu-end bg-primary border-0 shadow-lg"
                     aria-labelledby="navbarDropdownNotifications"
                   >
                     {notifications.length === 0 ? (
