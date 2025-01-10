@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Transaction from '../../components/Transaction'
 import { NavLink } from 'react-router-dom'
 const TransactionList = ({ transactions }) => {
