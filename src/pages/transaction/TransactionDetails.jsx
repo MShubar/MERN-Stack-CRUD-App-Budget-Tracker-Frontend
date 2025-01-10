@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-const TransactionDetails = ({ transactions, categories, budgets, user }) => {
+import { Link } from 'react-router-dom'
+const TransactionDetails = ({ transactions, budgets, user, categories }) => {
   let navigate = useNavigate()
   const { id } = useParams()
   const [transaction, setTransaction] = useState(null)
@@ -38,18 +39,18 @@ const TransactionDetails = ({ transactions, categories, budgets, user }) => {
             <h3>Priority: {transaction.priority}</h3>
             <h3>Recurring: {transaction.recurring}</h3>
 
-            <button
+            <Link
               className="btn btn-primary btn-sm mb-2"
-              onClick={() => navigate(`/transaction/update/${transaction._id}`)}
+              to={`/transaction/update/${transaction._id}`}
             >
               Update
-            </button>
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => navigate(`/transaction/delete/${transaction._id}`)}
+            </Link>
+            <Link
+              className="btn btn-primary btn-sm mb-2"
+              to={`/transaction/delete/${transaction._id}`}
             >
               Delete
-            </button>
+            </Link>
           </section>
         </>
       ) : (

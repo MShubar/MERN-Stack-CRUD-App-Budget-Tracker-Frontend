@@ -1,6 +1,6 @@
 import Transaction from '../../components/Transaction'
 import { NavLink } from 'react-router-dom'
-const TransactionList = ({ transactions, user }) => {
+const TransactionList = ({ transactions }) => {
   return (
     <div>
       <>
