@@ -334,7 +334,10 @@ const App = () => {
             element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
           <Route path="*" element={<h1>404</h1>} />
-          <Route path="/calendar" element={<CalendarPage />} />
+
+          <Route path="/calendar" element={<CalendarPage transactions={transactions} />}
+          />
+
         </Routes>
       </main>
     </>
