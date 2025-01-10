@@ -16,7 +16,7 @@ const TransactionForm = ({
     type: '',
     fixed: '',
     description: '',
-    date: '',
+    date: new Date().toISOString().split('T')[0],
     category: '',
     priority: '',
     recurring: '',
@@ -178,7 +178,6 @@ const TransactionForm = ({
               className="form-control border border-success rounded-3 shadow-sm"
               onChange={handleChange}
               value={formValues.date}
-              required
             />
           </div>
 

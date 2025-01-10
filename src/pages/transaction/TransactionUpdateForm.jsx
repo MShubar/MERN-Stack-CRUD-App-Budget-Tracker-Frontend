@@ -13,7 +13,7 @@ const TransactionUpdateForm = ({ transactions, setTransactions }) => {
     type: '',
     fixed: '',
     description: '',
-    date: '',
+    date: new Date().toISOString().split('T')[0],
     category: '',
     priority: '',
     recurring: '',

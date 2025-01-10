@@ -3,16 +3,10 @@ import { NavLink } from 'react-router-dom'
 import logo from '../assets/logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const Nav = ({ isAuthenticated, onLogout }) => {
+const Nav = ({ isAuthenticated, onLogout, transactions }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-
-  const notifications = [
-    { id: 1, message: 'New budget created' },
-    { id: 2, message: 'Transaction recorded' },
-    { id: 3, message: 'New category added' }
-  ]
-
-  const [unreadCount, setUnreadCount] = useState(notifications.length)
+  const [notifications, setNotifications] = useState([])
+  const [unreadCount, setUnreadCount] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +20,37 @@ const Nav = ({ isAuthenticated, onLogout }) => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    const currentDay = new Date().getDate()
+    const currentMonth = new Date().getMonth()
+
+    const filteredTransactions = transactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.date)
+
+      // Check for Monthly transactions (same day of the month)
+      const isMonthly =
+        transaction.recurring === 'Monthly' &&
+        transactionDate.getDate() === currentDay
+
+      // Check for Yearly transactions (same day and month)
+      const isYearly =
+        transaction.recurring === 'Annually' &&
+        transactionDate.getDate() === currentDay &&
+        transactionDate.getMonth() === currentMonth
+
+      return isMonthly || isYearly
+    })
+
+    // Generate notifications based on filtered transactions
+    const newNotifications = filteredTransactions.map((transaction) => ({
+      id: transaction._id,
+      message: `${transaction.name} - ${transaction.amount} ${transaction.type}`
+    }))
+
+    setNotifications(newNotifications)
+    setUnreadCount(newNotifications.length) // Count unread notifications
+  }, [transactions]) // Re-run whenever transactions change
 
   return (
     <nav
@@ -176,7 +201,7 @@ const Nav = ({ isAuthenticated, onLogout }) => {
                     Calendar
                   </NavLink>
                 </li>
-                <li className="nav-item"></li>
+
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link "
