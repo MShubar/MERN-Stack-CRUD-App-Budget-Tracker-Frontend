@@ -73,6 +73,7 @@ const CalendarPage = ({ transactions }) => {
           </div>
         </div>
     )
+
 }
 
 export default CalendarPage

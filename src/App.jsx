@@ -37,29 +37,22 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [searchBar, setSearchBar] = useState('')
 
-
   const location = useLocation()
-
-  useEffect(() => {
-    const getAllBudgets = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        try {
-          const response = await axios.get(`${BASE_URL}/budgets`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          setBudgets(response.data)
-        } catch (error) {
-          console.error('Error fetching budgets:', error)
-        }
+  const getAllBudgets = async () => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      try {
+        const response = await axios.get(`${BASE_URL}/budgets`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setBudgets(response.data)
+      } catch (error) {
+        console.error('Error fetching budgets:', error)
       }
     }
-
-    getAllBudgets()
-  }, [])
-
+  }
   useEffect(() => {
     const getAllTransactions = async () => {
       const token = localStorage.getItem('token')
@@ -94,22 +87,6 @@ const App = () => {
         }
       }
     }
-    const getAllBudgets = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        try {
-          const response = await axios.get(`${BASE_URL}/budget`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          setBudgets(response.data)
-        } catch (error) {
-          console.error('Error fetching budget:', error)
-        }
-      }
-    }
-
     getAllCategories()
     getAllBudgets()
   }, [])
@@ -145,7 +122,11 @@ const App = () => {
     <>
       <header>
         <div className="col-md-8">
-          <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+          <Nav
+            isAuthenticated={isAuthenticated}
+            onLogout={handleLogout}
+            transactions={transactions}
+          />
         </div>
       </header>
       <main>
@@ -255,7 +236,8 @@ const App = () => {
                 <TransactionForm
                   transactions={transactions}
                   setTransactions={setTransactions}
-                  user={user}
+                  budgets={budgets}
+                  setBudgets={setBudgets}
                 />
               }
             />
@@ -340,6 +322,8 @@ const App = () => {
                 <BudgetDeleteConfirm
                   budgets={budgets}
                   setBudgets={setBudgets}
+                  transactions={transactions}
+                  setTransactions={setTransactions}
                 />
               }
             />
@@ -350,8 +334,10 @@ const App = () => {
             element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
           <Route path="*" element={<h1>404</h1>} />
+
           <Route path="/calendar" element={<CalendarPage transactions={transactions} />}
           />
+
         </Routes>
       </main>
     </>

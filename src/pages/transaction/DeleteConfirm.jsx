@@ -21,7 +21,6 @@ const DeleteConfirm = ({ transactions, setTransactions }) => {
       navigate('/transaction/list')
     } catch (error) {
       console.error('Error deleting transaction:', error)
-      // Handle error (e.g., show a message to the user)
     }
   }
 
