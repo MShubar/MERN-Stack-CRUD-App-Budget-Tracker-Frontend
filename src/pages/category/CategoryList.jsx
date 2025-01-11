@@ -1,4 +1,4 @@
-import Category from '../../components/category'
+import Category from '../../components/Category'
 import { NavLink } from 'react-router-dom'
 
 const CategoryList = ({ categories }) => {
