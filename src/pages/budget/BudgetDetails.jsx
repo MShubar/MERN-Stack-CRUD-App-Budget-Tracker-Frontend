@@ -29,8 +29,12 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
           <h1>Budget Details</h1>
           <section className="budget-details">
             <h2>{budget.name}</h2>
+
             Start Balance: <h3>{budget.balance} BD</h3>
-            Current Balance: <h3>{budget.currentBalance} BD</h3>
+            Current Balance:{' '}
+            <h3 style={{ color: budget.currentBalance < 0 ? 'red' : 'black' }}>
+              {budget.currentBalance} BD
+            </h3>
             <Link
               className="btn btn-primary btn-sm mb-2"
               to={`/updatebudget/${budget._id}`}
