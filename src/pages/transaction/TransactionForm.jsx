@@ -26,9 +26,6 @@ const TransactionForm = ({
 
   const [categories, setCategories] = useState([])
   useEffect(() => {
-    // Fetch budgets from the database
-
-    // Fetch categories from the database
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/category`)
@@ -196,7 +193,7 @@ const TransactionForm = ({
               <option value="">Select a Category</option>
               {categories.map((category) => (
                 <option key={category._id} value={category._id}>
-                  {category.name} {/* Adjust the display value as needed */}
+                  {category.name}
                 </option>
               ))}
             </select>

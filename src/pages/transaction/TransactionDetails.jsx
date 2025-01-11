@@ -23,38 +23,60 @@ const TransactionDetails = ({ transactions, budgets, user, categories }) => {
     ? budgets.find((budget) => budget._id === transaction.budgetId)?.name
     : ''
   return (
-    <div>
+    <div className="container my-4">
       {transaction ? (
         <>
-          <h1>Transactions Details</h1>
-          <section className="transaction-details">
-            <h2>Transaction Name: {transaction.name}</h2>
-            <h2>Transaction Budget Name: {budgetName || 'N/A'}</h2>
-            <h3>Amount: {transaction.amount} </h3>
-            <h3>Type: {transaction.type}</h3>
-            <h3>Fixed: {transaction.fixed}</h3>
-            <h3>Description: {transaction.description}</h3>
-            <h3>Date: {transaction.date}</h3>
-            <h3>Category: {categoryName || 'N/A'}</h3>
-            <h3>Priority: {transaction.priority}</h3>
-            <h3>Recurring: {transaction.recurring}</h3>
+          <h1 className="text-primary mb-4">Transaction Details</h1>
+          <div className="card p-4 shadow-sm border-0">
+            <h2 className="text-success mb-3">
+              Transaction Name: {transaction.name}
+            </h2>
+            <p className="mb-2">
+              <strong>Transaction Budget Name:</strong> {budgetName || 'N/A'}
+            </p>
+            <p className="mb-2">
+              <strong>Amount:</strong> {transaction.amount} BD
+            </p>
+            <p className="mb-2">
+              <strong>Type:</strong> {transaction.type}
+            </p>
+            <p className="mb-2">
+              <strong>Fixed:</strong> {transaction.fixed}
+            </p>
+            <p className="mb-2">
+              <strong>Description:</strong> {transaction.description}
+            </p>
+            <p className="mb-2">
+              <strong>Date:</strong> {transaction.date}
+            </p>
+            <p className="mb-2">
+              <strong>Category:</strong> {categoryName || 'N/A'}
+            </p>
+            <p className="mb-2">
+              <strong>Priority:</strong> {transaction.priority}
+            </p>
+            <p className="mb-2">
+              <strong>Recurring:</strong> {transaction.recurring}
+            </p>
 
-            <Link
-              className="btn btn-primary btn-sm mb-2"
-              to={`/transaction/update/${transaction._id}`}
-            >
-              Update
-            </Link>
-            <Link
-              className="btn btn-primary btn-sm mb-2"
-              to={`/transaction/delete/${transaction._id}`}
-            >
-              Delete
-            </Link>
-          </section>
+            <div className="d-flex justify-content-between mt-3">
+              <Link
+                className="btn btn-warning btn-sm"
+                to={`/transaction/update/${transaction._id}`}
+              >
+                Update
+              </Link>
+              <Link
+                className="btn btn-danger btn-sm"
+                to={`/transaction/delete/${transaction._id}`}
+              >
+                Delete
+              </Link>
+            </div>
+          </div>
         </>
       ) : (
-        <h1>Loading...</h1>
+        <h2 className="text-muted">Loading...</h2>
       )}
     </div>
   )
