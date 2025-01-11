@@ -18,7 +18,6 @@
     <animate attributeName="transform" type="scale" values="1;1.05;1" dur="5s" repeatCount="indefinite" />
   </text>
   <text x="50%" y="180" font-size="20" text-anchor="middle" fill="#4CAF50" font-family="Helvetica, Arial, sans-serif">
-    Track Your Finances Efficiently
     <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite" />
     <animate attributeName="transform" type="scale" values="1;1.02;1" dur="5s" repeatCount="indefinite" />
   </text>

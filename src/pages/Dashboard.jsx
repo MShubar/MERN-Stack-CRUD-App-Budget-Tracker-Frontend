@@ -19,7 +19,9 @@ const getMonthlyTransactionData = (transactions) => {
   const monthlyCreditedData = Array(12).fill(0)
 
   transactions.forEach((transaction) => {
-    const monthIndex = new Date(transaction.date).getMonth()
+    let monthIndex = new Date(transaction.date).getMonth()
+    monthIndex = (monthIndex + 5) % 12 // Shift months to start from July (July = 0, August = 1, ..., June = 11)
+
     if (transaction.type === 'Debit') {
       monthlyCreditedData[monthIndex] += transaction.amount
     } else if (transaction.type === 'Credit') {
@@ -165,18 +167,18 @@ const Dashboard = ({ transactions }) => {
                     {
                       scaleType: 'band',
                       data: [
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'May',
-                        'Jun',
                         'Jul',
                         'Aug',
                         'Sep',
                         'Oct',
                         'Nov',
-                        'Dec'
+                        'Dec',
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun'
                       ]
                     }
                   ]}
