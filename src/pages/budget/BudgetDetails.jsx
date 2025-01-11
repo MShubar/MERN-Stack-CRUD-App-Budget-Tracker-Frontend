@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { BASE_URL } from '../../globals' // Adjust the import based on your project structure
+import { BASE_URL } from '../../globals'
 import { Link } from 'react-router-dom'
 
 const BudgetDetails = ({ budgets, setBudgets }) => {
@@ -12,7 +12,7 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
   useEffect(() => {
     const fetchBudget = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/budgets/${id}`) // Fetch the specific budget by ID
+        const response = await axios.get(`${BASE_URL}/budgets/${id}`)
         setBudget(response.data)
       } catch (error) {
         console.error('Error fetching budget:', error)
@@ -20,7 +20,7 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
     }
 
     fetchBudget()
-  }, [id]) // Fetch budget when the component mounts or when `id` changes
+  }, [id])
 
   return (
     <div>
@@ -29,8 +29,12 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
           <h1>Budget Details</h1>
           <section className="budget-details">
             <h2>{budget.name}</h2>
-            Start Balance: <h3>{budget.balance}</h3>
-            Current Balance: <h3>{budget.currentBalance}</h3>
+
+            Start Balance: <h3>{budget.balance} BD</h3>
+            Current Balance:{' '}
+            <h3 style={{ color: budget.currentBalance < 0 ? 'red' : 'black' }}>
+              {budget.currentBalance} BD
+            </h3>
             <Link
               className="btn btn-primary btn-sm mb-2"
               to={`/updatebudget/${budget._id}`}

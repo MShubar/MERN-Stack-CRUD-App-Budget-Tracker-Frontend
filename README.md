@@ -12,6 +12,7 @@ The Budget Tracker is a platform that allows users to keep track of tedious fina
 - Authentication: User sessions for login and management
 - Styling: Bootstrap for responsive design 
 
+
 ## Fork this repository
 1. Clone the forked repository
 2. Add your contributions (code or documentation)

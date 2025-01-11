@@ -67,39 +67,6 @@ form {
   align-items: center;
 }
 
-.transaction-list,
-.budget-list {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  height: 80vh;
-}
-
-.transaction-card,
-.budget-card {
-  border: 2px solid rgb(225, 166, 64);
-  border-radius: 10px;
-  background-color: rgb(57, 57, 100);
-  color: white;
-  margin: 20px;
-  width: 200px;
-  height: 200px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.transaction-details,
-.budget-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .addLink {
   color: blueviolet;
 }
@@ -127,9 +94,9 @@ form {
 .react-calendar__tile {
   font-size: 16px;
   color: #333;
-  padding: 10px;    
-  width: 50px;      
-  height: 50px;     
+  padding: 10px;
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -142,7 +109,7 @@ form {
 }
 
 .react-calendar__tile-active {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -153,11 +120,10 @@ form {
 .react-calendar__navigation {
   font-size: 18px;
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
 }
 
 .react-calendar__navigation button {
   font-size: 18px;
   color: #333;
 }
-
