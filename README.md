@@ -5,15 +5,13 @@ The Budget Tracker is a platform that allows users to keep track of tedious fina
 # Deployed link: 
 
 ## Technologies Used
-- Backend: Node.js
-- Frontend: React, CSS
+- Backend: Express.js
+- Frontend: React.js
 - Database: MongoDB
+- API Testing: Postman
 - Authentication: User sessions for login and management
-- Styling: Custom CSS, Bootstrap for responsive design
-- _**still in the works**_ 
+- Styling: Bootstrap for responsive design 
 
-## Next Steps: Upcoming Improvements & Additions
--  
 
 ## Fork this repository
 1. Clone the forked repository
