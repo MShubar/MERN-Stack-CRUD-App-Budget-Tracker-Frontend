@@ -6,14 +6,20 @@ import { BASE_URL } from '../../globals'
 const TransactionUpdateForm = ({ transactions, setTransactions }) => {
   const { id } = useParams()
   let navigate = useNavigate()
-
+  const formatDate = (dateString) => {
+    const date = new Date(dateString)
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
   const initialState = {
     name: '',
     amount: '',
     type: '',
     fixed: '',
     description: '',
-    date: '',
+    date: new Date().toISOString().split('T')[0],
     category: '',
     priority: '',
     recurring: '',
@@ -47,7 +53,6 @@ const TransactionUpdateForm = ({ transactions, setTransactions }) => {
       }
     }
 
-    // fetchTransaction()
     fetchBudgets()
     fetchCategories()
   }, [id, transactions])
@@ -194,9 +199,8 @@ const TransactionUpdateForm = ({ transactions, setTransactions }) => {
               type="date"
               id="date"
               className="form-control"
-              value={formValues.date}
+              value={formatDate(formValues.date)}
               onChange={handleChange}
-              required
             />
           </div>
 

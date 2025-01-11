@@ -1,10 +1,10 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { BASE_URL } from './globals'
 import axios from 'axios'
 import './App.css'
 import Nav from './components/Nav'
-import Home from './pages/transaction/Home'
+import Home from './pages/Home'
 import BudgetList from './pages/budget/BudgetList'
 import BudgetForm from './pages/budget/BudgetForm'
 import BudgetDetails from './pages/budget/BudgetDetails'
@@ -23,6 +23,11 @@ import CategoryUpdateForm from './pages/category/CategoryUpdateForm'
 import DeleteConfirmCategory from './pages/category/DeleteConfirmCategory'
 import Signup from './pages/auth/Signup'
 import Signin from './pages/auth/Signin'
+import Dashboard from './pages/Dashboard'
+
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
+import CalendarPage from './pages/CalendarPage'
 
 const App = () => {
   const [budgets, setBudgets] = useState([])
@@ -32,26 +37,22 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [searchBar, setSearchBar] = useState('')
 
-  useEffect(() => {
-    const getAllBudgets = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        try {
-          const response = await axios.get(`${BASE_URL}/budgets`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          setBudgets(response.data)
-        } catch (error) {
-          console.error('Error fetching budgets:', error)
-        }
+  const location = useLocation()
+  const getAllBudgets = async () => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      try {
+        const response = await axios.get(`${BASE_URL}/budgets`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setBudgets(response.data)
+      } catch (error) {
+        console.error('Error fetching budgets:', error)
       }
     }
-
-    getAllBudgets()
-  }, [])
-
+  }
   useEffect(() => {
     const getAllTransactions = async () => {
       const token = localStorage.getItem('token')
@@ -86,22 +87,6 @@ const App = () => {
         }
       }
     }
-    const getAllBudgets = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        try {
-          const response = await axios.get(`${BASE_URL}/budget`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          setBudgets(response.data)
-        } catch (error) {
-          console.error('Error fetching budget:', error)
-        }
-      }
-    }
-
     getAllCategories()
     getAllBudgets()
   }, [])
@@ -125,21 +110,64 @@ const App = () => {
   const filteredTransactions = transactions.filter((transaction) =>
     transaction.name.toLowerCase().includes(searchBar.toLowerCase())
   )
-
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(searchBar.toLowerCase())
+  )
+  const routesWithSearchBar = [
+    '/transaction/list',
+    '/budgetlist',
+    '/categorylist'
+  ]
   return (
     <>
       <header>
-        <Nav isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-        <input
-          type="text"
-          placeholder="Search for something.."
-          value={searchBar}
-          onChange={handleSearchBar}
-        />
+        <div className="col-md-8">
+          <Nav
+            isAuthenticated={isAuthenticated}
+            onLogout={handleLogout}
+            transactions={transactions}
+          />
+        </div>
       </header>
       <main>
+        {routesWithSearchBar.includes(location.pathname) && (
+          <div className="d-flex justify-content-center mt-4">
+            <input
+              type="text"
+              className="form-control w-50"
+              placeholder="Search for something..."
+              value={searchBar}
+              onChange={handleSearchBar}
+            />
+          </div>
+        )}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                transactions={transactions}
+                categories={categories}
+                budgets={budgets}
+                user={user}
+                isAuthenticated={isAuthenticated}
+              />
+            }
+          />
+          {user ? (
+            <Route
+              path="/dashboard"
+              element={
+                <Dashboard
+                  transactions={transactions}
+                  categories={categories}
+                  budgets={budgets}
+                  user={user}
+                  isAuthenticated={isAuthenticated}
+                />
+              }
+            />
+          ) : null}
           {user ? (
             <Route
               path="/transaction/list"
@@ -208,7 +236,8 @@ const App = () => {
                 <TransactionForm
                   transactions={transactions}
                   setTransactions={setTransactions}
-                  user={user}
+                  budgets={budgets}
+                  setBudgets={setBudgets}
                 />
               }
             />
@@ -216,19 +245,30 @@ const App = () => {
           //
           {user ? (
             <Route
-              path="/category/list"
-              element={<CategoryList categories={categories} />}
+              path="/categorylist"
+              element={<CategoryList categories={filteredCategories} />}
             />
           ) : null}
           {user ? (
             <Route
-              path="/category/list/:id"
+              path="/newcategory"
+              element={
+                <CategoryForm
+                  categories={categories}
+                  setCategories={setCategories}
+                />
+              }
+            />
+          ) : null}
+          {user ? (
+            <Route
+              path="/categorylist/:id"
               element={<CategoryDetails categories={categories} />}
             />
           ) : null}
           {user ? (
             <Route
-              path="/category/update/:id"
+              path="/categoryupdate/:id"
               element={
                 <CategoryUpdateForm
                   categories={categories}
@@ -239,26 +279,16 @@ const App = () => {
           ) : null}
           {user ? (
             <Route
-              path="/category/delete/:id"
+              path="/categorydelete/:id"
               element={
-                <DeleteConfirm
+                <DeleteConfirmCategory
                   categories={categories}
                   setCategories={setCategories}
                 />
               }
             />
           ) : null}
-          {user ? (
-            <Route
-              path="/category/new"
-              element={
-                <CategoryForm
-                  categories={categories}
-                  setCategories={setCategories}
-                />
-              }
-            />
-          ) : null}
+          //
           {user ? (
             <Route
               path="/budgetlist"
@@ -292,6 +322,8 @@ const App = () => {
                 <BudgetDeleteConfirm
                   budgets={budgets}
                   setBudgets={setBudgets}
+                  transactions={transactions}
+                  setTransactions={setTransactions}
                 />
               }
             />
@@ -301,7 +333,13 @@ const App = () => {
             path="/auth/signin"
             element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
-          <Route path="*" element={<h1>404</h1>} />
+          <Route path="*" element={<h1>404 Page doesn't exist</h1>} />
+          {user ? (
+            <Route
+              path="/calendar"
+              element={<CalendarPage transactions={transactions} />}
+            />
+          ) : null}
         </Routes>
       </main>
     </>

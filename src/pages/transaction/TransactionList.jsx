@@ -1,19 +1,25 @@
+import { useEffect } from 'react'
 import Transaction from '../../components/Transaction'
 import { NavLink } from 'react-router-dom'
-const TransactionList = ({ transactions, user }) => {
+
+const TransactionList = ({ transactions }) => {
   return (
-    <div>
-      <>
-        <h1>Transactions List</h1>
-        <NavLink className="addLink" to="/transaction/new">
+    <div className="container my-4">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="text-primary">Transactions List</h1>
+        <NavLink to="/transaction/new" className="btn btn-success">
           New Transaction
         </NavLink>
-        <section className="transaction-list">
+      </div>
+      <section className="transaction-list">
+        <div className="row gy-3">
           {transactions?.map((transaction) => (
-            <Transaction transaction={transaction} key={transaction._id} />
+            <div className="col-12" key={transaction._id}>
+              <Transaction transaction={transaction} />
+            </div>
           ))}
-        </section>
-      </>
+        </div>
+      </section>
     </div>
   )
 }

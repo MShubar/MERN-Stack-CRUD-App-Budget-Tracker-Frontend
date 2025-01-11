@@ -1,21 +1,26 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { BASE_URL } from '../../globals'
+import { Link } from 'react-router-dom'
 
-const BudgetDetails = ({ budgets }) => {
+const BudgetDetails = ({ budgets, setBudgets }) => {
   let navigate = useNavigate()
   const { id } = useParams()
-
   const [budget, setBudget] = useState(null)
 
   useEffect(() => {
-    const getBudget = () => {
-      const singleBudget = budgets.find((budget) => {
-        return budget._id === id
-      })
-      setBudget(singleBudget)
+    const fetchBudget = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/budgets/${id}`)
+        setBudget(response.data)
+      } catch (error) {
+        console.error('Error fetching budget:', error)
+      }
     }
-    getBudget()
-  }, [])
+
+    fetchBudget()
+  }, [id])
 
   return (
     <div>
@@ -24,13 +29,24 @@ const BudgetDetails = ({ budgets }) => {
           <h1>Budget Details</h1>
           <section className="budget-details">
             <h2>{budget.name}</h2>
-            <h3>{budget.balance}</h3>
-            <button onClick={() => navigate(`/updatebudget/${budget._id}`)}>
+
+            Start Balance: <h3>{budget.balance} BD</h3>
+            Current Balance:{' '}
+            <h3 style={{ color: budget.currentBalance < 0 ? 'red' : 'black' }}>
+              {budget.currentBalance} BD
+            </h3>
+            <Link
+              className="btn btn-primary btn-sm mb-2"
+              to={`/updatebudget/${budget._id}`}
+            >
               Update
-            </button>
-            <button onClick={() => navigate(`/deletebudget/${budget._id}`)}>
+            </Link>
+            <Link
+              className="btn btn-primary btn-sm mb-2"
+              to={`/deletebudget/${budget._id}`}
+            >
               Delete
-            </button>
+            </Link>
           </section>
         </>
       ) : (

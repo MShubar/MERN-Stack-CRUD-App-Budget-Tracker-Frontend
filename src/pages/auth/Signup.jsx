@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import axios from 'axios'
 import { BASE_URL } from '../../globals'
@@ -23,16 +22,11 @@ const Signup = () => {
     e.preventDefault()
     try {
       const response = await axios.post(`${BASE_URL}/users/signup`, formData)
-      if (response.status === 201){
-        navigate("/auth/signin")
+      if (response.status === 201) {
+        navigate('/auth/signin')
       }
-      
     } catch (error) {
-   
-      setMessage(
-        error.response?.data?.message ||
-          'Signup failed.'
-      )
+      setMessage(error.response?.data?.message || 'Signup failed.')
     }
   }
 

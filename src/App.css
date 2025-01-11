@@ -67,37 +67,117 @@ form {
   align-items: center;
 }
 
-.transaction-list, .budget-list {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  height: 80vh;
-}
-
-.transaction-card, .budget-card {
-  border: 2px solid rgb(225, 166, 64);
-  border-radius: 10px;
-  background-color: rgb(57, 57, 100);
-  color: white;
-  margin: 20px;
-  width: 200px;
-  height: 200px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.transaction-details, .budget-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .addLink {
   color: blueviolet;
 }
 
+.calendar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+}
+
+.react-calendar__tile {
+  font-size: 16px;
+  color: #333;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.react-calendar__tile-now {
+  background-color: #ff6347;
+  color: white;
+}
+
+.react-calendar__tile-active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.react-calendar__tile-disabled {
+  color: #ccc;
+}
+
+.react-calendar__navigation {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.react-calendar__navigation button {
+  font-size: 18px;
+  color: #333;
+}
+.home-container {
+  font-family: 'Arial', sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 800px;
+}
+
+.hero {
+  background-color: #f0f4f8;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.hero h1 {
+  color: #333;
+  font-size: 2.5em;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.features,
+.modules {
+  margin-top: 40px;
+}
+
+.features h2,
+.modules h2 {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.module {
+  background-color: #fff;
+  margin: 15px 0;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.module h3 {
+  color: #333;
+}
+
+.module p {
+  color: #666;
+  line-height: 1.5;
+}
