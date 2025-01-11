@@ -20,7 +20,7 @@ const getMonthlyTransactionData = (transactions) => {
 
   transactions.forEach((transaction) => {
     let monthIndex = new Date(transaction.date).getMonth()
-    monthIndex = (monthIndex + 5) % 12 // Shift months to start from July (July = 0, August = 1, ..., June = 11)
+    monthIndex = (monthIndex + 5) % 12
 
     if (transaction.type === 'Debit') {
       monthlyCreditedData[monthIndex] += transaction.amount
