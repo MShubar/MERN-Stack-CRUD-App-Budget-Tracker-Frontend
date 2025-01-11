@@ -333,11 +333,13 @@ const App = () => {
             path="/auth/signin"
             element={<Signin onLogin={handleLogin} setUser={setUser} />}
           />
-          <Route path="*" element={<h1>404</h1>} />
-
-          <Route path="/calendar" element={<CalendarPage transactions={transactions} />}
-          />
-
+          <Route path="*" element={<h1>404 Page doesn't exist</h1>} />
+          {user ? (
+            <Route
+              path="/calendar"
+              element={<CalendarPage transactions={transactions} />}
+            />
+          ) : null}
         </Routes>
       </main>
     </>

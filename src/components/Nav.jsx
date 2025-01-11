@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../assets/logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import notification from '../assets/notification.svg'
+import noNotification from '../assets/no-notification.svg'
 
 const Nav = ({ isAuthenticated, onLogout, transactions }) => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -222,29 +224,21 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   >
                     {unreadCount > 0 ? (
                       <>
-                        <svg
-                          fill="#000000"
-                          width="20px"
-                          height="20px"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M20,18H4l2-2V10a6,6,0,0,1,5-5.91V3a1,1,0,0,1,2,0V4.09a5.9,5.9,0,0,1,1.3.4A3.992,3.992,0,0,0,18,10v6Zm-8,4a2,2,0,0,0,2-2H10A2,2,0,0,0,12,22ZM18,4a2,2,0,1,0,2,2A2,2,0,0,0,18,4Z" />
-                        </svg>
-                        <span className="badge bg-danger ms-2">
-                          {unreadCount}
-                        </span>
+                        <img
+                          src={notification}
+                          alt="{notification}"
+                          className="navbar-brand"
+                          style={{ width: '30px', height: '30px' }}
+                        />
+                        <span className="badge bg-danger ">{unreadCount}</span>
                       </>
                     ) : (
-                      <svg
-                        fill="#000000"
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M10,20h4a2,2,0,0,1-4,0Zm8-4V10a6,6,0,0,0-5-5.91V3a1,1,0,0,0-2,0V4.09A6,6,0,0,0,6,10v6L4,18H20Z" />
-                      </svg>
+                      <img
+                        src={noNotification}
+                        alt="{noNotification}"
+                        className="navbar-brand"
+                        style={{ width: '30px', height: '30px' }}
+                      />
                     )}
                   </a>
                   <ul
