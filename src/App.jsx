@@ -38,21 +38,24 @@ const App = () => {
   const [searchBar, setSearchBar] = useState('')
 
   const location = useLocation()
-  const getAllBudgets = async () => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      try {
-        const response = await axios.get(`${BASE_URL}/budgets`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        setBudgets(response.data)
-      } catch (error) {
-        console.error('Error fetching budgets:', error)
+  useEffect(() => {
+    const getAllBudgets = async () => {
+      const token = localStorage.getItem('token')
+      if (token) {
+        try {
+          const response = await axios.get(`${BASE_URL}/budgets`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          setBudgets(response.data)
+        } catch (error) {
+          console.error('Error fetching transactions:', error)
+        }
       }
     }
-  }
+    getAllBudgets()
+  }, [])
   useEffect(() => {
     const getAllTransactions = async () => {
       const token = localStorage.getItem('token')
@@ -88,7 +91,6 @@ const App = () => {
       }
     }
     getAllCategories()
-    getAllBudgets()
   }, [])
   const handleLogin = () => {
     setIsAuthenticated(true)
@@ -238,6 +240,8 @@ const App = () => {
                   setTransactions={setTransactions}
                   budgets={budgets}
                   setBudgets={setBudgets}
+                  categories={categories}
+                  setCategories={setCategories}
                 />
               }
             />
@@ -292,7 +296,9 @@ const App = () => {
           {user ? (
             <Route
               path="/budgetlist"
-              element={<BudgetList budgets={filteredBudgets} />}
+              element={
+                <BudgetList budgets={filteredBudgets} setBudgets={setBudgets} />
+              }
             />
           ) : null}
           {user ? (

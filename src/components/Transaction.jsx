@@ -14,10 +14,10 @@ const Transaction = ({ transaction }) => {
             </h5>
             <span
               className={`badge ${
-                transaction.amount < 0 ? 'bg-danger' : 'bg-success'
+                transaction.type === 'Credit' ? 'bg-danger' : 'bg-success'
               } fs-6`}
             >
-              {transaction.amount < 0 ? '-' : '+'}
+              {transaction.type === 'Credit' ? '-' : '+'}
               {Math.abs(transaction.amount).toFixed(2)} BD
             </span>
           </div>

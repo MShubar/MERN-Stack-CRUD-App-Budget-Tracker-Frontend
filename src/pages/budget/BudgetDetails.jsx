@@ -11,16 +11,49 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
 
   useEffect(() => {
     const fetchBudget = async () => {
+      console.log('Fetching budget with ID:', id) // Debugging
+      const token = localStorage.getItem('token') // Retrieve the token from localStorage
+      console.log('Token:', token)
+      if (!token) {
+        console.error('No token found')
+        return
+      }
+
       try {
-        const response = await axios.get(`${BASE_URL}/budgets/${id}`)
+        const response = await axios.get(`${BASE_URL}/budgets/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}` // Add the token to the Authorization header
+          }
+        })
         setBudget(response.data)
       } catch (error) {
         console.error('Error fetching budget:', error)
       }
     }
-
     fetchBudget()
   }, [id])
+
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        console.error('No token found')
+        return
+      }
+
+      await axios.delete(`${BASE_URL}/budgets/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      // Update the list of budgets after deletion
+      setBudgets(budgets.filter((budget) => budget._id !== id))
+      navigate('/budgetlist')
+    } catch (error) {
+      console.error('Error deleting budget:', error)
+    }
+  }
 
   return (
     <div>
@@ -29,24 +62,33 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
           <h1>Budget Details</h1>
           <section className="budget-details">
             <h2>{budget.name}</h2>
-
-            Start Balance: <h3>{budget.balance} BD</h3>
-            Current Balance:{' '}
-            <h3 style={{ color: budget.currentBalance < 0 ? 'red' : 'black' }}>
-              {budget.currentBalance} BD
-            </h3>
-            <Link
-              className="btn btn-primary btn-sm mb-2"
-              to={`/updatebudget/${budget._id}`}
-            >
-              Update
-            </Link>
-            <Link
-              className="btn btn-primary btn-sm mb-2"
-              to={`/deletebudget/${budget._id}`}
-            >
-              Delete
-            </Link>
+            <p>
+              Start Balance: <strong>{budget.balance} BD</strong>
+            </p>
+            <p>
+              Current Balance:{' '}
+              <strong
+                style={{
+                  color: budget.currentBalance < 0 ? 'red' : 'black'
+                }}
+              >
+                {budget.currentBalance} BD
+              </strong>
+            </p>
+            <div className="btn-group">
+              <Link
+                className="btn btn-primary btn-sm mb-2"
+                to={`/updatebudget/${budget._id}`}
+              >
+                Update
+              </Link>
+              <button
+                className="btn btn-danger btn-sm mb-2"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            </div>
           </section>
         </>
       ) : (

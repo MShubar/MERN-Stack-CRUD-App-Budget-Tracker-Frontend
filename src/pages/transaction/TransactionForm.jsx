@@ -7,29 +7,55 @@ const TransactionForm = ({
   transactions,
   setTransactions,
   budgets,
-  setBudgets
+  setBudgets,
+  categories,
+  setCategories
 }) => {
   let navigate = useNavigate()
+
   const initialState = {
     name: '',
     amount: '',
     type: '',
-    fixed: '',
+    fixed: false, // Default to false, as boolean value
     description: '',
     date: new Date().toISOString().split('T')[0],
-    category: '',
+    category: '', // Use category instead of categoryId
     priority: '',
-    recurring: '',
+    recurring: 'None', // Default to 'None'
     budgetId: ''
   }
+
   const [formValues, setFormValues] = useState(initialState)
 
-  const [categories, setCategories] = useState([])
+  useEffect(() => {
+    const fetchBudgets = async () => {
+      try {
+        const token = localStorage.getItem('token')
+        const response = await axios.get(`${BASE_URL}/budgets`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setBudgets(response.data)
+      } catch (error) {
+        console.error('Error fetching budgets:', error)
+      }
+    }
+
+    fetchBudgets()
+  }, [])
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/category`)
-        setCategories(response.data)
+        const token = localStorage.getItem('token')
+        const response = await axios.get(`${BASE_URL}/category`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setCategories(response.data) // Assuming you're setting categories in state
       } catch (error) {
         console.error('Error fetching categories:', error)
       }
@@ -37,8 +63,21 @@ const TransactionForm = ({
 
     fetchCategories()
   }, [])
+
   const handleSubmit = async (event) => {
     event.preventDefault()
+
+    // Validate the form values before submitting
+    if (
+      !formValues.name ||
+      !formValues.amount ||
+      !formValues.type ||
+      !formValues.budgetId
+    ) {
+      alert('Please fill all required fields!')
+      return
+    }
+
     const token = localStorage.getItem('token')
     try {
       console.log(formValues)
@@ -48,16 +87,30 @@ const TransactionForm = ({
           Authorization: `Bearer ${token}`
         }
       })
+
+      // Assuming the server returns the newly created transaction
       setTransactions([...transactions, response.data])
       setFormValues(initialState)
       navigate('/transaction/list')
     } catch (error) {
       console.error('Error adding transaction:', error)
+      alert('Something went wrong while adding the transaction.')
     }
   }
 
   const handleChange = (event) => {
     setFormValues({ ...formValues, [event.target.id]: event.target.value })
+  }
+
+  const handleCategoryChange = (event) => {
+    setFormValues({
+      ...formValues,
+      category: event.target.value // Update the category field correctly
+    })
+  }
+
+  const handleFixedChange = (event) => {
+    setFormValues({ ...formValues, fixed: event.target.value === 'Yes' }) // Convert to boolean for fixed
   }
 
   return (
@@ -79,6 +132,7 @@ const TransactionForm = ({
               required
             />
           </div>
+
           <div className="mb-3">
             <label htmlFor="budgetId" className="form-label">
               Budget:
@@ -92,13 +146,15 @@ const TransactionForm = ({
               required
             >
               <option value="">Select a Budget</option>
-              {budgets.map((budget) => (
-                <option key={budget._id} value={budget._id}>
-                  {budget.name} {/* Adjust the display value as needed */}
-                </option>
-              ))}
+              {budgets &&
+                budgets.map((budget) => (
+                  <option key={budget._id} value={budget._id}>
+                    {budget.name}
+                  </option>
+                ))}
             </select>
           </div>
+
           <div className="mb-3">
             <label htmlFor="amount" className="form-label">
               Amount:
@@ -140,11 +196,11 @@ const TransactionForm = ({
               id="fixed"
               name="fixed"
               className="form-control border border-success rounded-3 shadow-sm"
-              onChange={handleChange}
-              value={formValues.fixed}
+              onChange={handleFixedChange}
+              value={formValues.fixed ? 'Yes' : 'No'}
               required
             >
-              <option value="">Select </option>
+              <option value="">Select</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -186,18 +242,20 @@ const TransactionForm = ({
               id="category"
               name="category"
               className="form-control border border-success rounded-3 shadow-sm"
-              onChange={handleChange}
+              onChange={handleCategoryChange}
               value={formValues.category}
               required
             >
               <option value="">Select a Category</option>
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
+              {categories &&
+                categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
             </select>
           </div>
+
           <div className="mb-3">
             <label htmlFor="priority" className="form-label">
               Priority:

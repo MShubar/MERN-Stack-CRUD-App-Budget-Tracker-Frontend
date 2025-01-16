@@ -10,15 +10,19 @@ const BudgetForm = ({ budgets, setBudgets }) => {
     name: '',
     balance: ''
   }
+
   const [formValues, setFormValues] = useState(initialState)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    const budgetData = { name, balance }
     const token = localStorage.getItem('token')
+
     try {
       const response = await axios.post(`${BASE_URL}/budgets`, formValues, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       })
       setBudgets([...budgets, response.data])
@@ -36,6 +40,10 @@ const BudgetForm = ({ budgets, setBudgets }) => {
   return (
     <div>
       <h1>Create a Budget:</h1>
+
+      {/* Show error message if there is one */}
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
         <input
@@ -43,8 +51,9 @@ const BudgetForm = ({ budgets, setBudgets }) => {
           id="name"
           onChange={handleChange}
           value={formValues.name}
+          required
         />
-        <br></br>
+        <br />
 
         <label htmlFor="balance">Balance:</label>
         <input
@@ -52,7 +61,10 @@ const BudgetForm = ({ budgets, setBudgets }) => {
           id="balance"
           onChange={handleChange}
           value={formValues.balance}
+          required
         />
+        <br />
+
         <button type="submit">Submit</button>
       </form>
     </div>
