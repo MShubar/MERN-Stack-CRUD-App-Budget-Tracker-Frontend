@@ -5,24 +5,24 @@ import axios from 'axios';
 import { BASE_URL } from '../../globals';
 
 const TransactionList = () => {
-  const [transactions, setTransactions] = useState([]); // Properly initialize state for transactions
+  const [transactions, setTransactions] = useState([]); 
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const token = localStorage.getItem('token'); // Retrieve token from storage
+        const token = localStorage.getItem('token'); 
         const response = await axios.get(`${BASE_URL}/transaction`, {
-          headers: { Authorization: `Bearer ${token}` }, // Pass token in headers
+          headers: { Authorization: `Bearer ${token}` }, 
         });
-        setTransactions(response.data); // Update state with fetched transactions
+        setTransactions(response.data); 
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch transactions.');
       }
     };
 
-    fetchTransactions(); // Fetch transactions when component mounts
-  }, []); // Ensure to fetch on component mount
+    fetchTransactions(); 
+  }, []); 
 
   return (
     <div className="container my-4">

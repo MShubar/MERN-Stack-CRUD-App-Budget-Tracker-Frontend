@@ -14,24 +14,22 @@ const BudgetDeleteConfirm = ({
   const deleteBudget = async () => {
     const token = localStorage.getItem('token')
     try {
-      // Delete the budget
+      
       await axios.delete(`${BASE_URL}/budgets/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
 
-      // Update budgets state
+     
       const updatedBudgets = budgets.filter((budget) => budget._id !== id)
       setBudgets(updatedBudgets)
 
-      // Remove transactions related to the deleted budget
       const updatedTransactions = transactions.filter(
         (transaction) => transaction.budgetId !== id
       )
       setTransactions(updatedTransactions)
 
-      // Navigate to the budget list
       navigate('/budgetlist')
     } catch (error) {
       console.log('Error deleting this budget:', error)

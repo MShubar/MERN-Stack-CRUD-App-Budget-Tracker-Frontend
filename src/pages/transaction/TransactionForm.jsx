@@ -17,12 +17,12 @@ const TransactionForm = ({
     name: '',
     amount: '',
     type: '',
-    fixed: false, // Default to false, as boolean value
+    fixed: false, 
     description: '',
     date: new Date().toISOString().split('T')[0],
-    category: '', // Use category instead of categoryId
+    category: '', 
     priority: '',
-    recurring: 'None', // Default to 'None'
+    recurring: 'None', 
     budgetId: ''
   }
 
@@ -55,7 +55,7 @@ const TransactionForm = ({
             Authorization: `Bearer ${token}`
           }
         })
-        setCategories(response.data) // Assuming you're setting categories in state
+        setCategories(response.data) 
       } catch (error) {
         console.error('Error fetching categories:', error)
       }
@@ -67,7 +67,7 @@ const TransactionForm = ({
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    // Validate the form values before submitting
+    
     if (
       !formValues.name ||
       !formValues.amount ||
@@ -88,7 +88,6 @@ const TransactionForm = ({
         }
       })
 
-      // Assuming the server returns the newly created transaction
       setTransactions([...transactions, response.data])
       setFormValues(initialState)
       navigate('/transaction/list')
@@ -105,12 +104,12 @@ const TransactionForm = ({
   const handleCategoryChange = (event) => {
     setFormValues({
       ...formValues,
-      category: event.target.value // Update the category field correctly
+      category: event.target.value 
     })
   }
 
   const handleFixedChange = (event) => {
-    setFormValues({ ...formValues, fixed: event.target.value === 'Yes' }) // Convert to boolean for fixed
+    setFormValues({ ...formValues, fixed: event.target.value === 'Yes' }) 
   }
 
   return (

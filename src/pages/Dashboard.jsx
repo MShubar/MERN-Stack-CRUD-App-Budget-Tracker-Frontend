@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { Link } from 'react-router'
 
-const getMonthlyTransactionData = (transactions) => {
+const getMonthlyTransactionData = (transactions, budgets) => {
   const monthlyData = Array(12).fill(0)
   const monthlyDebitedData = Array(12).fill(0)
   const monthlyCreditedData = Array(12).fill(0)
@@ -35,6 +35,7 @@ const getMonthlyTransactionData = (transactions) => {
 
   return { monthlyData, monthlyDebitedData, monthlyCreditedData }
 }
+
 
 const getCategoryDistribution = (transactions) => {
   const categoryMap = {}
@@ -58,12 +59,10 @@ const Dashboard = ({ transactions }) => {
   const { monthlyData, monthlyDebitedData, monthlyCreditedData } =
     getMonthlyTransactionData(transactions)
   const categoryDistribution = getCategoryDistribution(transactions)
-
   const sortedTransactions = [...transactions].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   )
 
-  // State to track when each section is in view
   const [inView, setInView] = useState({
     pieChart: false,
     barChart: false,
@@ -188,7 +187,7 @@ const Dashboard = ({ transactions }) => {
                       label: 'Monthly Spending BD'
                     }
                   ]}
-                  width={500}
+                  maxWidth={500}
                   height={400}
                   style={{ borderRadius: '8px' }}
                 />
@@ -209,6 +208,7 @@ const Dashboard = ({ transactions }) => {
         {inView.transactionList && (
           <Box
             sx={{
+              minHeight: "200px",
               maxHeight: '400px',
               overflowY: 'auto',
               paddingRight: 1
@@ -235,10 +235,10 @@ const Dashboard = ({ transactions }) => {
                               sx={{
                                 fontWeight: 'bold',
                                 color:
-                                  transaction.type === 'Debit' ? 'red' : 'green'
+                                  transaction.type === 'Debit' ? 'green' : 'red'
                               }}
                             >
-                              {transaction.type === 'Debit' ? '-' : '+'}{' '}
+                              {transaction.type === 'Debit' ? '+' : '-'}{' '}
                               {transaction.amount} BD
                             </Typography>{' '}
                             <Typography component="span" sx={{ color: 'gray' }}>

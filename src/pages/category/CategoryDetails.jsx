@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 export const CategoryDetails = ({ categories, transactions }) => {
   let navigate = useNavigate()
   const { id } = useParams()
-  const [category, setCategory] = useState(null) // initial null state
+  const [category, setCategory] = useState(null)
   const [categoryTransactions, setCategoryTransactions] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -36,7 +36,7 @@ export const CategoryDetails = ({ categories, transactions }) => {
     if (category !== null) {
       setLoading(false)
     }
-  }, [category]) // set loading to false once category is available
+  }, [category]) 
 
   if (loading) {
     return (

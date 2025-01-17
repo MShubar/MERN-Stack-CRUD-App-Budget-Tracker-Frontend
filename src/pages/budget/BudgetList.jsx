@@ -15,14 +15,14 @@ const BudgetList = ({ budgets, setBudgets }) => {
             Authorization: `Bearer ${token}`
           }
         })
-        setBudgets(response.data) // Update the budgets state
+        setBudgets(response.data)
       } catch (error) {
         console.error('Error fetching budgets:', error)
       }
     }
 
     fetchBudgets()
-  }, [setBudgets]) // Ensure that setBudgets is not being redefined
+  }, [setBudgets]) 
 
   return (
     <div className="container my-4">

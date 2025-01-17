@@ -181,3 +181,12 @@ form {
   color: #666;
   line-height: 1.5;
 }
+
+@media (max-width: 768px) {
+  .bg-black-mobile {
+    background-color: black !important;
+  }
+  .text-white-mobile .nav-link {
+    color: white !important;
+  }
+}

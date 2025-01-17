@@ -246,7 +246,7 @@ const App = () => {
               }
             />
           ) : null}
-          //
+          
           {user ? (
             <Route
               path="/categorylist"
@@ -292,7 +292,7 @@ const App = () => {
               }
             />
           ) : null}
-          //
+          
           {user ? (
             <Route
               path="/budgetlist"

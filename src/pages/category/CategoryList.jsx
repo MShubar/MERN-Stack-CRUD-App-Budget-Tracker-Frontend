@@ -1,32 +1,32 @@
-import { useState, useEffect } from 'react';  // Import the hooks
-import axios from 'axios';  // Don't forget axios import
+import { useState, useEffect } from 'react';  
+import axios from 'axios';  
 import { NavLink } from 'react-router-dom';
 import Category from '../../components/Category';
-import { BASE_URL } from '../../globals';  // Ensure that this constant is defined in your globals
+import { BASE_URL } from '../../globals';  
 
 const CategoryList = () => {
-  const [categories, setCategories] = useState([]); // Declare state for categories
-  const [error, setError] = useState(''); // Handle errors
+  const [categories, setCategories] = useState([]); 
+  const [error, setError] = useState(''); 
 
   useEffect(() => {
     const fetchCategory = async () => {
-      const token = localStorage.getItem('token'); // Get the token from local storage
+      const token = localStorage.getItem('token'); 
 
       try {
         const response = await axios.get(`${BASE_URL}/category`, {
           headers: {
-            Authorization: `Bearer ${token}` // Send the token with the request
+            Authorization: `Bearer ${token}` 
           }
         });
-        setCategories(response.data); // Update the categories state
+        setCategories(response.data);
       } catch (error) {
         console.error('Error fetching Category:', error);
         setError('Failed to fetch categories.');
       }
     };
 
-    fetchCategory(); // Call the function to fetch categories
-  }, []); // Empty dependency array ensures it runs only once when the component mounts
+    fetchCategory(); 
+  }, []); 
 
   return (
     <div className="container my-4">
@@ -37,7 +37,7 @@ const CategoryList = () => {
         </NavLink>
       </div>
 
-      {error && <p className="text-danger">{error}</p>} {/* Display error if there's an issue */}
+      {error && <p className="text-danger">{error}</p>} 
 
       <section className="category-list">
         <div className="row gy-3">
@@ -48,7 +48,7 @@ const CategoryList = () => {
               </div>
             ))
           ) : (
-            <p className="text-muted">No categories found.</p> // Display a message if no categories
+            <p className="text-muted">No categories found.</p> 
           )}
         </div>
       </section>

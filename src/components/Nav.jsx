@@ -4,11 +4,15 @@ import logo from '../assets/logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import notification from '../assets/notification.svg'
 import noNotification from '../assets/no-notification.svg'
+import notificationres from "../assets/notificationres.svg"
+import noNotificationres from '../assets/no-notificationres.svg'
 
 const Nav = ({ isAuthenticated, onLogout, transactions }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [notifications, setNotifications] = useState([])
   const [unreadCount, setUnreadCount] = useState(0)
+  const [isNavOpen, setIsNavOpen] = useState(false) 
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +26,22 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    };
 
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  const notificationIcon = isMobile
+    ? unreadCount > 0
+      ? notificationres
+      : noNotificationres
+    : unreadCount > 0
+    ? notification
+    : noNotification;
   useEffect(() => {
     const currentDay = new Date().getDate()
     const currentMonth = new Date().getMonth()
@@ -51,16 +70,21 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
     setUnreadCount(newNotifications.length)
   }, [transactions])
 
+  const handleNavLinkClick = () => {
+    setIsNavOpen(false) 
+  }
+  const handleClick = (event) => {
+    onLogout(); 
+    handleNavLinkClick(event); 
+  };
   return (
     <nav
-      className={`navbar navbar-expand-lg ${
-        isScrolled ? 'bg-dark bg-opacity-75' : 'bg-transparent'
-      } fixed-top`}
+      className={`navbar navbar-expand-lg ${isScrolled ? 'bg-dark bg-opacity-75' : 'bg-transparent'} fixed-top`}
     >
       <div className="container-fluid">
         <div className="navbar-logo">
           {!isAuthenticated && (
-            <NavLink to="/">
+            <NavLink to="/" onClick={handleNavLinkClick}>
               <img
                 src={logo}
                 alt="Logo"
@@ -70,7 +94,7 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
             </NavLink>
           )}
           {isAuthenticated && (
-            <NavLink to="/dashboard">
+            <NavLink to="/dashboard" onClick={handleNavLinkClick}>
               <img
                 src={logo}
                 alt="Logo"
@@ -86,12 +110,13 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
-          aria-expanded="false"
+          aria-expanded={isNavOpen ? 'true' : 'false'}
           aria-label="Toggle navigation"
+          onClick={() => setIsNavOpen(!isNavOpen)} 
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className={`collapse navbar-collapse bg-black-mobile text-white-mobile ${isNavOpen ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav ms-auto">
             {!isAuthenticated && (
               <>
@@ -99,6 +124,7 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   <NavLink
                     to="/"
                     className="nav-link btn btn-outline-success px-3 py-2 me-2"
+                    onClick={handleNavLinkClick}
                   >
                     Home
                   </NavLink>
@@ -107,6 +133,7 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   <NavLink
                     to="/auth/signin"
                     className="nav-link btn btn-outline-success px-3 py-2 me-2"
+                    onClick={handleNavLinkClick} 
                   >
                     Signin
                   </NavLink>
@@ -115,6 +142,7 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   <NavLink
                     to="/auth/signup"
                     className="nav-link btn btn-outline-success px-3 py-2 me-2"
+                    onClick={handleNavLinkClick} 
                   >
                     Signup
                   </NavLink>
@@ -127,6 +155,7 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   <NavLink
                     to="/dashboard"
                     className="nav-link btn btn-outline-success px-3 py-2 me-2"
+                    onClick={handleNavLinkClick} 
                   >
                     Dashboard
                   </NavLink>
@@ -145,12 +174,12 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   </a>
                   <ul className="dropdown-menu bg-primary border-0 shadow-lg">
                     <li>
-                      <NavLink to="/newbudget" className="dropdown-item">
+                      <NavLink to="/newbudget" className="dropdown-item" onClick={handleNavLinkClick}>
                         New Budget
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/budgetlist" className="dropdown-item">
+                      <NavLink to="/budgetlist" className="dropdown-item" onClick={handleNavLinkClick}>
                         Budget List
                       </NavLink>
                     </li>
@@ -169,12 +198,12 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   </a>
                   <ul className="dropdown-menu bg-primary border-0 shadow-lg">
                     <li>
-                      <NavLink to="/transaction/new" className="dropdown-item">
+                      <NavLink to="/transaction/new" className="dropdown-item" onClick={handleNavLinkClick}>
                         New Transaction
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/transaction/list" className="dropdown-item">
+                      <NavLink to="/transaction/list" className="dropdown-item" onClick={handleNavLinkClick}>
                         Transaction List
                       </NavLink>
                     </li>
@@ -193,12 +222,12 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   </a>
                   <ul className="dropdown-menu bg-primary border-0 shadow-lg">
                     <li>
-                      <NavLink to="/newcategory" className="dropdown-item">
+                      <NavLink to="/newcategory" className="dropdown-item" onClick={handleNavLinkClick}>
                         New Category
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/categorylist" className="dropdown-item">
+                      <NavLink to="/categorylist" className="dropdown-item" onClick={handleNavLinkClick}>
                         Category List
                       </NavLink>
                     </li>
@@ -208,43 +237,32 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                   <NavLink
                     to="/calendar"
                     className="nav-link btn btn-outline-success px-3 py-2 me-2"
+                    onClick={handleNavLinkClick} 
                   >
                     Calendar
                   </NavLink>
                 </li>
 
-                <li className="nav-item dropdown">
+                <li className="nav-item dropdown d-flex justify-content-center align-items-center">
                   <a
-                    className="nav-link "
+                    className="nav-link"
                     href="#"
                     id="navbarDropdownNotifications"
                     role="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    {unreadCount > 0 ? (
-                      <>
-                        <img
-                          src={notification}
-                          alt="{notification}"
-                          className="navbar-brand"
-                          style={{ width: '30px', height: '30px' }}
-                        />
-                        <span className="badge bg-danger ">{unreadCount}</span>
-                      </>
-                    ) : (
-                      <img
-                        src={noNotification}
-                        alt="{noNotification}"
-                        className="navbar-brand"
-                        style={{ width: '30px', height: '30px' }}
-                      />
+                    <img
+                      src={notificationIcon}
+                      alt="Notification Icon"
+                      className="navbar-brand"
+                      style={{ width: '30px', height: '30px' }}
+                    />
+                    {unreadCount > 0 && (
+                      <span className="badge bg-danger">{unreadCount}</span>
                     )}
                   </a>
-                  <ul
-                    className="dropdown-menu dropdown-menu-end bg-primary border-0 shadow-lg"
-                    aria-labelledby="navbarDropdownNotifications"
-                  >
+                  <ul className="dropdown-menu dropdown-menu-end bg-primary border-0 shadow-lg">
                     {notifications.length === 0 ? (
                       <li>
                         <span className="dropdown-item">
@@ -266,7 +284,7 @@ const Nav = ({ isAuthenticated, onLogout, transactions }) => {
                 <li className="nav-item">
                   <NavLink
                     to="/"
-                    onClick={onLogout}
+                    onClick={handleClick}
                     className="nav-link btn btn-outline-success px-3 py-2 me-2"
                   >
                     Log out

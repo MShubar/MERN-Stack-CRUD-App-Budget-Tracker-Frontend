@@ -11,8 +11,8 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
 
   useEffect(() => {
     const fetchBudget = async () => {
-      console.log('Fetching budget with ID:', id) // Debugging
-      const token = localStorage.getItem('token') // Retrieve the token from localStorage
+      console.log('Fetching budget with ID:', id) 
+      const token = localStorage.getItem('token')
       console.log('Token:', token)
       if (!token) {
         console.error('No token found')
@@ -22,13 +22,15 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
       try {
         const response = await axios.get(`${BASE_URL}/budgets/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}` // Add the token to the Authorization header
+            Authorization: `Bearer ${token}`
           }
         })
+        
         setBudget(response.data)
       } catch (error) {
         console.error('Error fetching budget:', error)
       }
+      
     }
     fetchBudget()
   }, [id])
@@ -47,7 +49,6 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
         }
       })
 
-      // Update the list of budgets after deletion
       setBudgets(budgets.filter((budget) => budget._id !== id))
       navigate('/budgetlist')
     } catch (error) {
@@ -82,12 +83,12 @@ const BudgetDetails = ({ budgets, setBudgets }) => {
               >
                 Update
               </Link>
-              <button
+              <Link
                 className="btn btn-danger btn-sm mb-2"
-                onClick={handleDelete}
+                to={`/deletebudget/${budget._id}`}
               >
                 Delete
-              </button>
+              </Link>
             </div>
           </section>
         </>
