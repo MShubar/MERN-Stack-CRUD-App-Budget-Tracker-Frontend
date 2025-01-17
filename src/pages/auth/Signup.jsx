@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { BASE_URL } from '../../globals'
 
@@ -13,6 +13,7 @@ const initialFormData = {
 const Signup = () => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
